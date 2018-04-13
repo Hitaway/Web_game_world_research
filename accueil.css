@@ -1,0 +1,38 @@
+/*-----------------------------------------
+				Menu
+-----------------------------------------*/
+
+header h1
+{
+	margin: 0px;
+	float: left;
+	margin-left: 20px;
+	margin-top: 10px;
+}
+
+header button
+{
+	float: right;
+	margin-right: 20px;
+	margin-top: 10px;
+}
+
+header
+{
+	width: 100%;
+	padding-bottom: 35%;
+	background: transparent url("Image/monde.jpg") no-repeat scroll 0 0 / 100% auto;
+}
+
+/*-----------------------------------------
+				Corps Partie 1
+-----------------------------------------*/
+
+/*-----------------------------------------
+				Footer
+-----------------------------------------*/
+
+footer
+{
+	margin-top: 15px;
+}
