@@ -24,8 +24,13 @@ header
 	background: transparent url("Image/monde.jpg") no-repeat scroll 0 0 / 100% auto;
 }
 
+.btn_retour
+{
+	float: right;
+}
+
 /*-----------------------------------------
-				Corps Partie 1
+				Corps
 -----------------------------------------*/
 
 /*-----------------------------------------
