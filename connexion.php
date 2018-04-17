@@ -6,8 +6,30 @@ include("includes/debut.php");
 include("includes/menu.php");
 echo '<p><i>Vous êtes ici</i> : <a href="./index.php">Index du forum</a> --> Connexion';
 
+try
+{
+$bd = new PDO('mysql:host=localhost;dbname=user;charset=utf8', 'root', 'root');
+$bd->query('SET NAMES utf8');
+$bd->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+
+$req = $bd->prepare('SELECT * FROM joueursEchec');
+$req->execute();
+$res = $req->fetch(PDO::FETCH_ASSOC);
+
+var_dump($res);
+echo "dfghjklmghjklm";
+}
+
+catch (PDOException $e)
+{
+   	// On termine le script en affichant le n de l'erreur ainsi que le message 
+    die('<p> La connexion a échoué. Erreur[' .$e->getCode().'] : ' .$e->getMessage() . '</p>');
+}
+
+
 //On reprend la suite du code
-echo '<h1>Connexion</h1>';
+/*echo '<h1>Connexion</h1>';
 if ($id!=0) erreur(ERR_IS_CO);
 else
 {
@@ -48,5 +70,5 @@ else
     }
     echo $message.'</div></body></html>';
 
-}
+}*/
 ?>

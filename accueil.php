@@ -31,6 +31,7 @@
 
 	<!--########################## Modal #################-->
 <?php
+include("connexion.php");
 	if (!isset($_POST['pseudo1'])){ //On est dans la page de formulaire
 	echo'<div id="modalConnexion" class="modal fade" role="dialog">
 			<div class="modal-dialog">
