@@ -1,15 +1,6 @@
-<!doctype html>
-<html lang="fr">
-<head>
- 	<meta charset="utf-8">
- 	<title>Titre de la page</title>
- 	<link rel="stylesheet" type="text/css" href="accueil.css">
- 	<link rel="shortcut icon" href="Image/icone.ico">
- 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
-    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-  	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-</head>
+<?php
+	include("debut.php");
+?>
 <body>
 	<!--########################## En-tête #################-->
 	<header>
@@ -31,8 +22,12 @@
 
 	<!--########################## Modal #################-->
 <?php
-include("connexion.php");
-	if (!isset($_POST['pseudo1'])){ //On est dans la page de formulaire
+//Attribution des variables de session
+$lvl=(isset($_SESSION['level']))?(int) $_SESSION['level']:1;
+$id=(isset($_SESSION['id']))?(int) $_SESSION['id']:0;
+$pseudo=(isset($_SESSION['pseudo']))?$_SESSION['pseudo']:'';
+
+	if (!isset($_POST['pseudo'])){ //On est dans la page de formulaire
 	echo'<div id="modalConnexion" class="modal fade" role="dialog">
 			<div class="modal-dialog">
 				<div class="modal-content">
@@ -47,7 +42,7 @@ include("connexion.php");
 							<div class="form-group">
 								<label for="mdp1" class="col-sm-3 control-label">Mot de passe</label>
 								<div class="col-sm-9">
-									<input type="email" class="form-control" id="mdp1" placeholder="Entrez votre mot de passe..." />
+									<input type="password" class="form-control" id="mdp1" placeholder="Entrez votre mot de passe..." />
 								</div>
 							</div>
 							<div class="row">
@@ -63,8 +58,48 @@ include("connexion.php");
 			</div>
 		</div>';
 	}
+	else
+	{
+	    $message='';		//pour stocker le message d'erreur
+	    if (empty($_POST['pseudo']) || empty($_POST['password']) ) //Oublie d'un champ
+	    {
+	        $message = '<p>une erreur s\'est produite pendant votre identification.
+		Vous devez remplir tous les champs</p>
+		<p>Cliquez <a href="./connexion.php">ici</a> pour revenir</p>';
+	    }
+	    else //On check le mot de passe
+	    {
+	        $query=$db->prepare('SELECT pseudo, mdp FROM utilisateurs WHERE pseudo = :pseudo');
+	        $query->bindValue(':pseudo',$_POST['pseudo'], PDO::PARAM_STR);
+	        $query->execute();
+	        $data=$query->fetch();
 
-	if (empty($_POST['pseudo1'])){ // Si on la variable est vide, on peut considérer qu'on est sur la page de formulaire
+			if ($data['mdp'] == $_POST['password']) // Acces OK !
+			{
+			    $_SESSION['pseudo'] = $data['membre_pseudo'];
+			    $_SESSION['level'] = $data['membre_rang'];
+			    $_SESSION['id'] = $data['membre_id'];
+			    $message = '<p>Bienvenue '.$data['membre_pseudo'].', 
+					vous êtes maintenant connecté!</p>
+					<p>Cliquez <a href="./index.php">ici</a> 
+					pour revenir à la page d accueil</p>';  
+			}
+			else // Acces pas OK !
+			{
+			    $message = '<p>Une erreur s\'est produite 
+			    pendant votre identification.<br /> Le mot de passe ou le pseudo 
+		            entré n\'est pas correcte.</p><p>Cliquez <a href="./connexion.php">ici</a> 
+			    pour revenir à la page précédente
+			    <br /><br />Cliquez <a href="./index.php">ici</a> 
+			    pour revenir à la page d accueil</p>';
+			}
+		    $query->CloseCursor();
+	    }
+	    echo $message.'</div></body></html>';
+
+	}
+
+	if (empty($_POST['pseudo'])){ // Si on la variable est vide, on peut considérer qu'on est sur la page de formulaire
 	echo'<div id="modalInscrire" class="modal fade" role="dialog">
 			<div class="modal-dialog">
 				<div class="modal-content">

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : localhost:8889
--- Généré le :  mer. 18 avr. 2018 à 14:18
+-- Généré le :  mer. 18 avr. 2018 à 17:39
 -- Version du serveur :  5.6.35
 -- Version de PHP :  7.1.8
 
@@ -22,7 +22,7 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `CLASSEMENT` (
   `id` int(11) UNSIGNED NOT NULL,
-  `score` int(11) UNSIGNED NOT NULL
+  `score` int(10) UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -34,17 +34,17 @@ CREATE TABLE `CLASSEMENT` (
 CREATE TABLE `HISTORIQUE` (
   `id` int(11) UNSIGNED NOT NULL,
   `pseudo` varchar(35) NOT NULL,
-  `score` int(11) UNSIGNED NOT NULL,
   `nom_questionnaire` varchar(200) NOT NULL,
-  `date_partie` date NOT NULL
+  `date_partie` date NOT NULL,
+  `score` int(10) UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Déchargement des données de la table `HISTORIQUE`
 --
 
-INSERT INTO `HISTORIQUE` (`id`, `pseudo`, `score`, `nom_questionnaire`, `date_partie`) VALUES
-(1, 'Hitaway', 12, '7 merveille deu monde', '2018-04-10');
+INSERT INTO `HISTORIQUE` (`id`, `pseudo`, `nom_questionnaire`, `date_partie`, `score`) VALUES
+(1, 'Hitaway', '7 merveille deu monde', '2018-04-10', 0);
 
 -- --------------------------------------------------------
 
@@ -79,15 +79,16 @@ CREATE TABLE `UTILISATEURS` (
   `nom` varchar(35) DEFAULT NULL,
   `email` varchar(35) DEFAULT NULL,
   `mdp` varchar(35) DEFAULT NULL,
-  `date_inscription` date DEFAULT NULL
+  `date_inscription` date DEFAULT NULL,
+  `droit` set('admin','user') NOT NULL COMMENT 'droit utilisateur/admin'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Déchargement des données de la table `UTILISATEURS`
 --
 
-INSERT INTO `UTILISATEURS` (`pseudo`, `prenom`, `nom`, `email`, `mdp`, `date_inscription`) VALUES
-('Hitaway', 'Quentin', 'Rat', 'machin@hotmail.fr', 'azerty', '0000-00-00');
+INSERT INTO `UTILISATEURS` (`pseudo`, `prenom`, `nom`, `email`, `mdp`, `date_inscription`, `droit`) VALUES
+('Hitaway', 'Quentin', 'Rat', 'machin@hotmail.fr', 'azerty', '0000-00-00', 'admin');
 
 --
 -- Index pour les tables déchargées
@@ -97,7 +98,7 @@ INSERT INTO `UTILISATEURS` (`pseudo`, `prenom`, `nom`, `email`, `mdp`, `date_ins
 -- Index pour la table `CLASSEMENT`
 --
 ALTER TABLE `CLASSEMENT`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`,`score`);
 
 --
 -- Index pour la table `HISTORIQUE`
