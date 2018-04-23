@@ -17,36 +17,23 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Structure de la table `CLASSEMENT`
+-- Structure de la table `UTILISATEURS`
 --
 
-CREATE TABLE `CLASSEMENT` (
-  `id` int(11) UNSIGNED NOT NULL,
-  `score` int(10) UNSIGNED NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- --------------------------------------------------------
-
---
--- Structure de la table `HISTORIQUE`
---
-
-CREATE TABLE `HISTORIQUE` (
-  `id` int(11) UNSIGNED NOT NULL,
-  `pseudo` varchar(35) NOT NULL,
-  `nom_questionnaire` varchar(200) NOT NULL,
-  `date_partie` date NOT NULL,
-  `score` int(10) UNSIGNED NOT NULL
+CREATE TABLE `UTILISATEURS` (
+  `pseudo` varchar(35) NOT NULL DEFAULT '',
+  `prenom` varchar(35) DEFAULT NULL,
+  `nom` varchar(35) DEFAULT NULL,
+  `email` varchar(35) DEFAULT NULL,
+  `mdp` varchar(35) DEFAULT NULL,
+  `date_inscription` date DEFAULT NULL,
+  `droit` set('admin','user') NOT NULL COMMENT 'droit utilisateur/admin'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Déchargement des données de la table `HISTORIQUE`
+-- Déchargement des données de la table `UTILISATEURS`
 --
 
-INSERT INTO `HISTORIQUE` (`id`, `pseudo`, `nom_questionnaire`, `date_partie`, `score`) VALUES
-(1, 'Hitaway', '7 merveille deu monde', '2018-04-10', 0);
-
--- --------------------------------------------------------
 
 --
 -- Structure de la table `QUESTIONNAIRES`
@@ -70,22 +57,40 @@ CREATE TABLE `QUESTIONS` (
 -- --------------------------------------------------------
 
 --
--- Structure de la table `UTILISATEURS`
+-- Structure de la table `HISTORIQUE`
 --
 
-CREATE TABLE `UTILISATEURS` (
-  `pseudo` varchar(35) NOT NULL DEFAULT '',
-  `prenom` varchar(35) DEFAULT NULL,
-  `nom` varchar(35) DEFAULT NULL,
-  `email` varchar(35) DEFAULT NULL,
-  `mdp` varchar(35) DEFAULT NULL,
-  `date_inscription` date DEFAULT NULL,
-  `droit` set('admin','user') NOT NULL COMMENT 'droit utilisateur/admin'
+CREATE TABLE `HISTORIQUE` (
+  `id` int(11) UNSIGNED NOT NULL,
+  `pseudo` varchar(35) NOT NULL,
+  `nom_questionnaire` varchar(200) NOT NULL,
+  `date_partie` date NOT NULL,
+  `score` int(10) UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Déchargement des données de la table `UTILISATEURS`
+-- Déchargement des données de la table `HISTORIQUE`
 --
+
+--
+-- Structure de la table `CLASSEMENT`
+--
+
+CREATE TABLE `CLASSEMENT` (
+  `id` int(11) UNSIGNED NOT NULL,
+  `score` int(10) UNSIGNED NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+
+
+INSERT INTO `HISTORIQUE` (`id`, `pseudo`, `nom_questionnaire`, `date_partie`, `score`) VALUES
+(1, 'Hitaway', '7 merveille deu monde', '2018-04-10', 0);
+
+-- --------------------------------------------------------
+
+
 
 INSERT INTO `UTILISATEURS` (`pseudo`, `prenom`, `nom`, `email`, `mdp`, `date_inscription`, `droit`) VALUES
 ('Hitaway', 'Quentin', 'Rat', 'machin@hotmail.fr', 'azerty', '0000-00-00', 'admin');
@@ -129,11 +134,6 @@ ALTER TABLE `UTILISATEURS`
 -- Contraintes pour les tables déchargées
 --
 
---
--- Contraintes pour la table `CLASSEMENT`
---
-ALTER TABLE `CLASSEMENT`
-  ADD CONSTRAINT `fk_classement_id_historique` FOREIGN KEY (`id`) REFERENCES `HISTORIQUE` (`id`);
 
 --
 -- Contraintes pour la table `HISTORIQUE`
@@ -146,3 +146,11 @@ ALTER TABLE `HISTORIQUE`
 --
 ALTER TABLE `QUESTIONS`
   ADD CONSTRAINT `fk_questions_nom_question_questionaires` FOREIGN KEY (`nom_questionaire`) REFERENCES `QUESTIONNAIRES` (`nom_questionnaire`);
+
+
+  --
+-- Contraintes pour la table `CLASSEMENT`
+--
+ALTER TABLE `CLASSEMENT`
+  ADD CONSTRAINT `fk_classement_id_historique` FOREIGN KEY (`id`) REFERENCES `HISTORIQUE` (`id`);
+
