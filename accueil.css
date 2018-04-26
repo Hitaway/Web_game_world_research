@@ -1,29 +1,21 @@
 /*-----------------------------------------
-				Menu
+				Entête
 -----------------------------------------*/
 
-header h1
+/*pour le logo tout en haut tout a gauche de la page*/
+#img_logo
 {
-	margin: 0px;
-	float: left;
-	margin-left: 20px;
-	margin-top: 10px;
-}
-
-header button
-{
-	float: right;
+	margin-top: -5px; 
 	margin-right: 20px;
-	margin-top: 10px;
 }
 
-header
+#navbar
 {
-	width: 100%;
-	padding-bottom: 35%;
-	background: transparent url("Image/monde.jpg") no-repeat scroll 0 0 / 100% auto;
+	border-radius: 0px;
+	margin-bottom: -20px;	/*enlever l'espace entre la navbar et ce qu'il y a en dessous*/
 }
 
+/*positionner les boutons dans les modales*/
 .btn_retour
 {
 	float: right;
@@ -38,6 +30,30 @@ header
 				Corps
 -----------------------------------------*/
 
+#img_monde
+{
+	width: 100%;
+	height: 650px;
+	z-index: -1;
+}
+
+#img_map_marqueur
+{
+	position:absolute;
+  	top: 100px;
+left: 50px;
+}
+
+#texte_intro
+{
+	background-color: white;
+}
+
+#classement
+{
+	background-color: #eceeef;
+}
+
 /*-----------------------------------------
 				Footer
 -----------------------------------------*/
@@ -45,4 +61,5 @@ header
 footer
 {
 	margin-top: 15px;
+
 }

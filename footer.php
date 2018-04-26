@@ -1,5 +1,5 @@
 <footer>
 	<div class="footer-copyright py-3 text-center">
-		<p>Site réalisé par : Quentin Rat et Slimane Kouba || © 2018</p>
+		<p>© 2018 Company, Inc. réalisé par : Quentin Rat et Slimane Kouba</p>
 	</div>
 </footer>

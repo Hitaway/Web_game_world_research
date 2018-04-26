@@ -1,10 +1,39 @@
-<?php
-	require("identifiants.php");
+<?php 
 	require("debut.php");
+	require("identifiants.php"); 	
+	require("functions.php");
 ?>
+
 <body>
 	<!--########################## En-tête #################-->
 	<?php require("header.php"); ?>
+
+	<!--########################## Corps #################-->
+    <div style="position: relative;">
+	    <img src="Image/monde2.png" id="img_monde" alt="img_monde">
+	    <img src="Image/map_marqueur2.png" id="img_map_marqueur" alt="img_monde">
+	</div>
+
+  	<div class="jumbotron" id="texte_intro">
+    	<div class="container">
+        	<h1 class="display-3">Explore le monde!</h1>
+        	<p>Notre jeu interactif est à connotation culturelle. Le principe général est de vous proposez des questionnaires constitueś de 7 questions. Le « plateau » du jeu est constitué de carte du monde. Chaque question consiste à localiser l’emplacement du lieu mentionné dans la question. Pour chaque question vous devrez donc cliquer sur un endroit de la carte. Des points vous seront alors attribuer en fonction de l'éloignement de la cible à trouver.</p>
+        	<p><a class="btn btn-primary btn-lg" href="regle.php" role="Règle">Règle »</a></p>
+      	</div>
+    </div>
+
+
+
+    <!--########################## Classement #################-->
+
+    <div id="classement">
+	    <h2 class="display-3">Classement</h2>
+	    <img src="Image/podium.png" alt="img_podium">
+		<div class="panel panel-default">
+			<div class="panel-heading">Classement</div>
+			<?php afficheClassement($bd); ?>
+		</div>
+	</div>
 
 	<!--########################## Modal #################-->
 			<div id="modalConnexion" class="modal fade" role="dialog">
@@ -26,7 +55,7 @@
 									<div class="col-sm-9">
 										<input type="password" class="form-control form-control-warning" name="mdp1" id="mdp1" placeholder="Entrez votre mot de passe..." />
    										<span class="help-block" id="error-msg">
-                          					<p class="text-danger">Identifiant incorrect</p>
+                          					<p class="text-danger"></p>
                  						</span>
 
 
@@ -38,7 +67,7 @@
 									<div class="col-sm-3"></div>
 									<div class="col-sm-9">
 										<button type="submit" class="btn btn-primary btn_valider">Connexion</button>
-										<button type="button" class="btn btn-danger btn_retour">Annuler</button>
+										<button type="button" class="btn btn-danger btn_annuler">Annuler</button>
 									</div>
 								</div>
 							</div>
@@ -48,7 +77,7 @@
 			</div>
 
 
-<div class="container">
+<!--<div class="container">
   <form>
     <div class="form-group row has-success">
       <label for="inputHorizontalSuccess" class="col-sm-2 col-form-label">Email</label>
@@ -75,7 +104,7 @@
       </div>
     </div>
   </form>
-</div>
+</div>-->
 
 		<div id="modalInscrire" class="modal fade" role="dialog">
 			<div class="modal-dialog">
@@ -127,7 +156,7 @@
 								<div class="col-sm-3"></div>
 								<div class="col-sm-9">
 									<button type="submit" class="btn btn-primary btn_valider">S'inscrire</button>
-									<button type="button" class="btn btn-danger btn_retour">Annuler</button>			
+									<button type="button" class="btn btn-danger btn_annuler">Annuler</button>			
 								</div>
 							</div>
 						</div>				
@@ -136,40 +165,39 @@
 			</div>
 		</div>
 <?php
-//Attribution des variables de session
-$lvl=(isset($_SESSION['level']))?(int) $_SESSION['level']:1;
-$id=(isset($_SESSION['id']))?(int) $_SESSION['id']:0;
-$pseudo=(isset($_SESSION['pseudo']))?$_SESSION['pseudo']:'';
+		//stocker le message d'erreur qui sera ensuite transmit au JS
 
-	if (isset($_POST['pseudo1']) && isset($_POST['mdp1']) /*&& trim($_POST['pseudo1']) && trim($_POST['mdp1'])*/){ //On est dans la page de formulaire
-	    if (empty($_POST['pseudo1']) || empty($_POST['password1']) ) //Oublie d'un champ
+	/*if (isset($_POST['pseudo1']) && isset($_POST['mdp1']) && trim($_POST['pseudo1']) && trim($_POST['mdp1'])){ //On est dans la page de formulaire
+	    if (empty($_POST['pseudo1']) || empty($_POST['mdp1']) ) //Oublie d'un champ
 	    {
-	        $message = '<script>alert("une erreur sest produite pendant votre identification.");</script>';
+	        $message = "veillez saisir tout les champs.";
 	    }
 	    else //On check le mot de passe
 	    {
-	        $query=$db->prepare('SELECT pseudo, mdp FROM utilisateurs WHERE pseudo = :pseudo');
+	        $query=$db->prepare('SELECT * FROM utilisateurs WHERE pseudo = :pseudo');
 	        $query->bindValue(':pseudo',$_POST['pseudo'], PDO::PARAM_STR);
 	        $query->execute();
 	        $data=$query->fetch();
 
-			if ($data['mdp'] == $_POST['password']) // Acces OK !
+			if ($data['mdp'] == $_POST['password']) // MDP correct
 			{
-			    $_SESSION['pseudo'] = $data['membre_pseudo'];
-			    $_SESSION['level'] = $data['membre_rang'];
-			    $_SESSION['id'] = $data['membre_id'];
-			    $message = '<p>Bienvenue '.$data['membre_pseudo'].', 
-					vous êtes maintenant connecté!</p>';  
+			    $_SESSION['pseudo'] = $data['pseudo'];
+			    $_SESSION['droit'] = $data['droit'];
+			    $message = "vous êtes connectés.";  
 			}
-			else // Acces pas OK !
+			else // MDP incorrect
 			{
-			    $message = '<p>Le mot de passe ou le pseudo 
-		            entré n\'est pas correcte.</p>';
+			    $message = "Le mot de passe ou le pseudo 
+		            entré n\'est pas correcte.";
 			}
 		    $query->CloseCursor();
-	    }
-	    echo $message;
-	}
+	    }*/
+//echo $message;
+	    $message = "zaeae1";
+		    $reponse = array("message" => $message);
+			header('Content-type: application/json');
+			json_encode($reponse);
+	//}
 ?>
 
 	<!--########################## Pied de page #################-->
