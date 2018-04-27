@@ -6,13 +6,30 @@
 
 <body>
 	<!--########################## En-tête #################-->
-	<?php require("header.php"); ?>
 
-	<!--########################## Corps #################-->
-    <div style="position: relative;">
+	<div id="entête_img">
+		<?php require("header.php"); ?>
+
+	<!--########################## Entête avec le titre #################-->
+   
+	    <div id="img_map_marqueur"><img src="Image/map_marqueur.png" alt="img_monde"></div>
+	    <h1 style="text-align: center; color: white; margin-bottom: 30px;">RESEARCH</h1>
+	    <hr class="trait_entête" color="white" size="3">
+	    <hr class="trait_entête">
+	    <h2 style="text-align: center; color: white;">Play</h2>
+	</div>
+
+   <!-- <div id="entête_img">
 	    <img src="Image/monde2.png" id="img_monde" alt="img_monde">
 	    <img src="Image/map_marqueur2.png" id="img_map_marqueur" alt="img_monde">
+	    <h1 style="text-align: center; color: white;">RESEARCH</h1>
+	    <hr class="trait_entête" color="white" size="3">
+	    <hr class="trait_entête">
+	    <h2 style="text-align: center; color: white;">Play</h2>
 	</div>
+	-->
+
+	<!--########################## Texte descriptif du jeu #################-->
 
   	<div class="jumbotron" id="texte_intro">
     	<div class="container">
@@ -22,20 +39,23 @@
       	</div>
     </div>
 
-
-
     <!--########################## Classement #################-->
 
     <div id="classement">
-	    <h2 class="display-3">Classement</h2>
-	    <img src="Image/podium.png" alt="img_podium">
-		<div class="panel panel-default">
-			<div class="panel-heading">Classement</div>
-			<?php afficheClassement($bd); ?>
+	    <div class="container">
+		    <h1 class="display-3">Classement</h1>
+		   	<div id="div_img_podium">
+		   		<a href="classement.php"><img src="Image/podium.png" alt="img_podium" id="img_podium"></a>
+		   	</div>
+			<div class="panel panel-default">
+				<div class="panel-heading col-lg-12 col-md-12 col-sm-12">Classement</div>
+				<?php afficheClassement($bd, 3); ?>
+			</div>
 		</div>
 	</div>
 
 	<!--########################## Modal #################-->
+
 			<div id="modalConnexion" class="modal fade" role="dialog">
 				<div class="modal-dialog">
 					<div class="modal-content">
@@ -201,6 +221,6 @@
 ?>
 
 	<!--########################## Pied de page #################-->
-	<?php include("footer.php"); ?>
+	<?php require("footer.php"); ?>
 </body>
 </html>

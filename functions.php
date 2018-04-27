@@ -1,5 +1,5 @@
 <?php
-	function afficheClassement($bd)
+	function afficheClassement($bd, $nbJoueurAAfficher)
 	{
 		try
 		{
@@ -11,8 +11,12 @@
 			if($res)
 			{
 				//stocker les requetes dans un tableau pour pouvoir les mettre dans un l'ordre ensuite
+				$val = 1;
 				do{
 			    	$tableau[] = $res;
+			    	if($val == $nbJoueurAAfficher)
+			    		break;
+			    	$val ++;
 				}while($res = $req->fetch(PDO::FETCH_ASSOC));
 				
 				// Obtient une liste de colonnes

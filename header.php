@@ -1,6 +1,6 @@
 <header>
 	<nav class="navbar navbar-inverse" id="navbar">
-  		<div class="container-fluid ">
+  		<div class="container-fluid">
   			<!-- regroupe tout pour un meilleur affichage mobile -->
    			<div class="navbar-header">
       			<a class="navbar-brand navbar-left" href="accueil.php">

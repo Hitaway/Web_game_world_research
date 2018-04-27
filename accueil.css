@@ -13,6 +13,7 @@
 {
 	border-radius: 0px;
 	margin-bottom: -20px;	/*enlever l'espace entre la navbar et ce qu'il y a en dessous*/
+	/*A VOIR PAR LA SUITE => background-color: transparent;*/
 }
 
 /*positionner les boutons dans les modales*/
@@ -27,29 +28,89 @@
 }
 
 /*-----------------------------------------
-				Corps
+		Entête avec le titre
 -----------------------------------------*/
 
+#entête_img
+{
+	background-image: url('Image/monde3.jpg');
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    padding-bottom: 300px;
+}
+
+#img_map_marqueur
+{
+	text-align: center;
+  	margin-top: 100px;
+}
+
+.trait_entête{
+	width: 15%;
+	margin-top: -14px;
+}
+
+/*
+dans id navbar => z-index: 2;				la navbar est au dessus de l'image du monde
 #img_monde
 {
 	width: 100%;
 	height: 650px;
-	z-index: -1;
+	z-index: 1;				/*l'image du monde est en dessous de la navbar*/
+/*}
+
+#entête_img
+{
+	position: relative;
 }
 
 #img_map_marqueur
 {
 	position:absolute;
   	top: 100px;
-left: 50px;
+  	left: 45%;
 }
+
+.trait_entête{
+	width: 15%;
+	
+}*/
+
+/*-----------------------------------------
+		Texte descriptif du jeu
+-----------------------------------------*/
 
 #texte_intro
 {
 	background-color: white;
 }
 
+/*-----------------------------------------
+				Classement
+-----------------------------------------*/
+
 #classement
+{
+	background-color: #eceeef;
+}
+
+#onglet_classement
+{
+	margin-top: 70px;
+}
+
+#div_img_podium
+{
+	text-align: center;
+	margin: 30px;
+}
+
+#img_podium
+{
+	width: 350px;
+}
+
+#container_classement
 {
 	background-color: #eceeef;
 }
@@ -60,6 +121,16 @@ left: 50px;
 
 footer
 {
-	margin-top: 15px;
+	margin-top: 30px;
+	margin-bottom: 15px;
+}
 
+#texte_nom_dev
+{
+	float: right;
+}
+
+#texte_copyrigth
+{
+	float: left;
 }
