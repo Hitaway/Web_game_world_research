@@ -33,7 +33,7 @@
 
 #entête_img
 {
-	background-image: url('Image/monde3.jpg');
+	background-image: url('Image/monde4.jpg');
     background-repeat: no-repeat;
     background-size: 100% 100%;
     padding-bottom: 300px;
@@ -42,39 +42,27 @@
 #img_map_marqueur
 {
 	text-align: center;
-  	margin-top: 100px;
+  	margin-top: 80px;
 }
 
 .trait_entête{
 	width: 15%;
-	margin-top: -14px;
+	margin-top: -16px;
 }
 
-/*
-dans id navbar => z-index: 2;				la navbar est au dessus de l'image du monde
-#img_monde
+#texte_play
 {
-	width: 100%;
-	height: 650px;
-	z-index: 1;				/*l'image du monde est en dessous de la navbar*/
-/*}
-
-#entête_img
-{
-	position: relative;
+	text-align: center; 
+	color: white; 
+	font-size: 30px;
 }
 
-#img_map_marqueur
+#titre_research
 {
-	position:absolute;
-  	top: 100px;
-  	left: 45%;
+	text-align: center; 
+	color: white; 
+	margin-bottom: 30px;
 }
-
-.trait_entête{
-	width: 15%;
-	
-}*/
 
 /*-----------------------------------------
 		Texte descriptif du jeu
@@ -123,6 +111,7 @@ footer
 {
 	margin-top: 30px;
 	margin-bottom: 15px;
+	
 }
 
 #texte_nom_dev

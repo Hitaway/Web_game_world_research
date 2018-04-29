@@ -25,7 +25,7 @@ $(document).ready(function()
     	$('#affichage').css('left', event.pageX);
 	});*/
 	
-	$('form').submit(function(){
+	/*$('form').submit(function(){
 		console.log("123");
 		var message = "erarear"
 		$.post("http://localhost:8888/Desktop/GitHub/Web_game_world_research/accueil.php",{
@@ -38,13 +38,13 @@ $(document).ready(function()
 				console.log("789");
 				alert(" Name n Form Submitted Successfully......");
 
-	});
+	});*/
 
 	$('form').submit(function(){
 		var message = "aze";
 		$.ajax({
 			type:"POST",
-			url:"accueil.php",
+			url:"/accueil.php",
 			success:function(retour){
 				message = "OK";
 			},

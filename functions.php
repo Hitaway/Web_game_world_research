@@ -48,6 +48,7 @@
 			}
 			else
 				echo '<p style="text-align: center;">Aucun joueur dans la base de données </p>';
+			$req->CloseCursor();
 		}
 		catch(PDOException $e)
 		{
@@ -56,4 +57,91 @@
 		}	
 		echo '</table>';
 	}
+
+	//Test si les valeurs du premier tableau ($cle) sont des clés du deuxième
+	function testValeurExist($cle,$tableau)
+	{
+	  	foreach($cle as $v){
+	      	if(!isset($tableau[$v]))
+	        	return false;
+	    }
+	    return true;
+	}
+	  
+	//Test si les valeurs ne sont pas vides
+	function testPasVide($cle,$tableau)
+	{
+	    foreach($cle as $v){
+	      	if(trim($tableau[$v])== '')
+	        	return false;
+	    }
+	    return true;
+	}
+
+	function verifSaisieUtilisateur($bd, $tableau)
+  	{
+	    if(strlen($tableau['nom']) >= 35)
+	      return "nom trop long";
+
+	    if(strlen($tableau['prenom']) >= 35)
+	      return "prenom trop long";
+
+	    if(strlen($tableau['pseudo2']) >= 35)
+	      return "pseudo trop long";
+
+	    if(strlen($tableau['mail']) >= 60)
+	      return "adresse mail trop long";
+
+	    if(strlen($tableau['mdp2']) >= 150 || strlen($tableau['mdp3']) >= 150)
+	      return "mdp trop long";
+
+	    if(strlen($tableau['mdp3']) < 8 || strlen($tableau['mdp2']) < 8)
+	      return "mdp trop court";
+
+	    if($tableau['mdp3'] != $tableau['mdp2'])
+	      return "mdp de confirmation different du mdp";
+
+	    /*if (!(filter_var($email, FILTER_VALIDATE_EMAIL)))
+	        return "email a un format non adapté";*/
+	        
+	    try
+	    {
+	      $req = $bd->prepare('SELECT * FROM UTILISATEURS');
+	      $req->execute();
+	      $res = $req->fetch(PDO::FETCH_ASSOC);
+
+	      do{
+	          if($res['email'] == $tableau['email'])
+	            return "mail deja utiliser";
+	      }while($res = $req->fetch(PDO::FETCH_ASSOC));
+	      $req->CloseCursor();
+	    }
+	    catch(PDOException $e)
+	    {
+	        // On termine le script en affichant le n de l'erreur ainsi que le message 
+	        die('<p> Erreur : ' . $e->getMessage() . '</p>');
+	    }
+
+	    try
+	    {
+	      $req = $bd->prepare('SELECT * FROM UTILISATEURS');
+	      $req->execute();
+	      $res = $req->fetch(PDO::FETCH_ASSOC);
+
+	      do{
+	          if($res['pseudo'] == $tableau['pseudo2'])
+	            return "pseudo deja utiliser";
+	      }while($res = $req->fetch(PDO::FETCH_ASSOC));
+	      $req->CloseCursor();
+	    }
+	    catch(PDOException $e)
+	    {
+	        // On termine le script en affichant le n de l'erreur ainsi que le message 
+	        die('<p> Erreur : ' . $e->getMessage() . '</p>');
+	    }
+
+	    //Si tout les champs sont correcte on retourne true
+	    return true;
+ 	}
+
 ?>
