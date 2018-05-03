@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : localhost:8889
--- Généré le :  ven. 27 avr. 2018 à 00:46
+-- Généré le :  jeu. 03 mai 2018 à 08:54
 -- Version du serveur :  5.6.35
 -- Version de PHP :  7.1.8
 
@@ -126,8 +126,8 @@ CREATE TABLE `UTILISATEURS` (
   `pseudo` varchar(35) NOT NULL DEFAULT '',
   `prenom` varchar(35) DEFAULT NULL,
   `nom` varchar(35) DEFAULT NULL,
-  `email` varchar(35) DEFAULT NULL,
-  `mdp` varchar(35) DEFAULT NULL,
+  `email` varchar(60) DEFAULT NULL,
+  `mdp` varchar(150) DEFAULT NULL,
   `date_inscription` date DEFAULT NULL,
   `droit` set('admin','user') NOT NULL COMMENT 'droit utilisateur/admin'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -141,7 +141,8 @@ INSERT INTO `UTILISATEURS` (`pseudo`, `prenom`, `nom`, `email`, `mdp`, `date_ins
 ('Kinstaar', 'Piong', 'Wang', 'machin3@hotmail.fr', 'azerty', '2018-04-12', 'user'),
 ('Micka', 'Mickael', 'André', 'machin4@hotmail.fr', 'azerty', '2018-04-12', 'user'),
 ('Robi62', 'Robin', 'Delanoe', 'machin5@hotmail.fr', 'azerty', '2018-04-12', 'user'),
-('Slimane93', 'Slimane', 'Kouba', 'machin2@hotmail.fr', 'azerty', '2018-04-10', 'admin');
+('Slimane93', 'Slimane', 'Kouba', 'machin2@hotmail.fr', 'azerty', '2018-04-10', 'admin'),
+('zaeaeaze', 'zaeaze', 'aazezae', 'machin@hotmail.fr', 'azertyazerty', '2018-04-29', 'user');
 
 --
 -- Index pour les tables déchargées
