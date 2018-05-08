@@ -73,6 +73,11 @@
 	background-color: white;
 }
 
+#nom_utilisateur
+{
+	color: green;
+}
+
 /*-----------------------------------------
 				Classement
 -----------------------------------------*/
@@ -101,6 +106,15 @@
 #container_classement
 {
 	background-color: #eceeef;
+}
+
+/*-----------------------------------------
+			Ajouter question
+-----------------------------------------*/
+
+#btn_enregistrer
+{
+	float: right;
 }
 
 /*-----------------------------------------

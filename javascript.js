@@ -41,20 +41,21 @@ $(document).ready(function()
 	});*/
 
 	$('form').submit(function(){
-		var message = "aze";
+		var message2 = "aze";
 		$.ajax({
-			type:"POST",
-			url:"/accueil.php",
+			type:'POST',
+			url:'accueil.php',
+			data : 'pseudo1=' + pseudo1,
 			success:function(retour){
-				message = "OK";
+				alert("SUCCESS:"+pseudo1);
+				
 			},
-			error: function(retour){ 
-              	message = "NON";
+			error: function(retour){
+              	alert("ERREUR");
             }
 		});
-				console.log("azeaz"+message);
-		alert("voici un message: "+message);
-
+		$('#nom_utilisateur').append("<a id=\"nom_utilisateur\"><span class=\"glyphicon glyphicon-user\"></span>OKAYYYY</a>");
+		alert("DANS LA FONCTION");
 	});
 
 	

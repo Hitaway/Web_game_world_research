@@ -3,8 +3,6 @@
 ?>
 
 <?php
-  $_SESSION['pseudo']="";
-  $_SESSION['droit']="";
   $message="";  //stocker le message d'erreur qui sera ensuite transmit au JS
 
   if (isset($_POST['pseudo1']) && isset($_POST['mdp1'])){ //On verifie que les variable existe
@@ -23,7 +21,12 @@
         {
           $_SESSION['pseudo'] = $data['pseudo'];
           $_SESSION['droit'] = $data['droit'];
-          $message = "vous êtes connectés.";  
+          $message = "vous êtes connectés.";
+
+                $message = "OKKKAYYYYYYY";
+                $reponse = array("message" => $message);
+                header('Content-type: application/json');
+                json_encode($reponse);
         }
         else //si MDP incorrect
         {
@@ -31,13 +34,6 @@
         }
         $query->CloseCursor();
       }
-
-      /*
-      echo $message;
-      $message = "zaeae1";
-      $reponse = array("message" => $message);
-      header('Content-type: application/json');
-      json_encode($reponse);*/
   }
 
   $param = array('nom','prenom','email','pseudo2','mdp2','mdp3');
@@ -78,7 +74,6 @@
       }
       echo '<br><br><br><br><br><h1 style="color: red;">'.$message.'</h1>';
   }
-
 ?>
 
 <header>
@@ -102,8 +97,8 @@
           }
            //echo '<br><br><br><br><br><h1 style="color: red;">PSEUDO'.$_SESSION['pseudo'].'.</h1>';
           if($_SESSION['pseudo']!=""){    //s'il est connecté on affiche
-            echo "<li><a><span class=\"glyphicon glyphicon-user\"></span> Nom de la personne</a></li>";
-            echo "<li><a><span class=\"glyphicon glyphicon-log-out\"></span> Déconexion</a></li>";
+            echo "<li><a id=\"nom_utilisateur\"><span class=\"glyphicon glyphicon-user\"></span> Nom de la personne</a></li>";
+            echo "<li><a href=\"deconnexion.php\"><span class=\"glyphicon glyphicon-log-out\"></span> Déconexion</a></li>";
           }
           ?>
 

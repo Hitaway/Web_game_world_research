@@ -144,4 +144,8 @@
 	    return true;
  	}
 
+ 	function longOuLatValide($value){
+ 		return preg_match("#^[-]?(([0-9]+\.[0-9]+)|([0-9]+))$#", $value);
+ 	}
+
 ?>
