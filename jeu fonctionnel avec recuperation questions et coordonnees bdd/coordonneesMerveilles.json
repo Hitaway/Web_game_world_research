@@ -1,0 +1,131 @@
+[
+	{
+		"type": "FeatureCollection",
+		"features": [
+			{
+				"type": "Feature",
+				"geometry": {
+					"type": "Point",
+					"coordinates": [
+						31.133889,
+						29.978889
+					]
+				},
+				"properties": {
+					"name": "La Pyramide de Kheops",
+					"description":"",
+					"image":""
+				}
+
+			},
+		{
+				"type": "Feature",
+				"geometry": {
+					"type": "Point",
+					"coordinates": [
+						31.133889,
+						29.978889
+					]
+				},
+				"properties": {
+					"name": "Les Jardins Suspendus de Babylone",
+					"description":"",
+					"image":""
+				}
+
+			},
+		{
+				"type": "Feature",
+				"geometry": {
+					"type": "Point",
+					"coordinates": [
+						21.63,
+						38.6378
+					]
+				},
+				"properties": {
+					"name": "La Statue chryselephantine de Zeus",
+					"description":"",
+					"image":""
+				}
+
+			},
+		{
+				"type": "Feature",
+				"geometry": {
+					"type": "Point",
+					"coordinates": [
+						27.3639,
+						37.9497
+					]
+				},
+				"properties": {
+					"name": "Le Temple d'Artemis",
+					"description":"",
+					"image":""
+				}
+
+			},
+		{
+				"type": "Feature",
+				"geometry": {
+					"type": "Point",
+					"coordinates": [
+						27.42406,
+						37.03794
+					]
+				},
+				"properties": {
+					"name": "Le Tombeau de Mausole",
+					"description":"",
+					"image":""
+				}
+
+			},
+		{
+				"type": "Feature",
+				"geometry": {
+					"type": "Point",
+					"coordinates": [
+						28.2278,
+						36.4511
+					]
+				},
+				"properties": {
+					"name": "Le Colosse de Rhodes",
+					"description":"",
+					"image":""
+				}
+
+		},
+			{
+				"type": "Feature",
+				"geometry": {
+					"type": "Point",
+					"coordinates": [
+						29.885,
+						31.2142
+					]
+				},
+				"properties": {
+					"name": "La Tour de Pharos",
+					"description":"",
+					"image":""
+				}
+
+			}
+		]
+	}
+]								
+
+
+
+
+
+
+
+
+
+
+
+
