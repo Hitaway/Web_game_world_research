@@ -13,7 +13,7 @@
 {
 	border-radius: 0px;
 	margin-bottom: -20px;	/*enlever l'espace entre la navbar et ce qu'il y a en dessous*/
-	/*A VOIR PAR LA SUITE => background-color: transparent;*/
+	background-color: black;
 }
 
 /*positionner les boutons dans les modales*/
@@ -33,35 +33,45 @@
 
 #entête_img
 {
-	background-image: url('Image/monde4.jpg');
+	background-image: url('Image/monde.jpg');
     background-repeat: no-repeat;
     background-size: 100% 100%;
     padding-bottom: 300px;
 }
 
-#img_map_marqueur
+#div_img_map_marqueur
 {
 	text-align: center;
   	margin-top: 80px;
 }
 
+#img_marqueur
+{
+	width: 158px;
+	height: 283px;
+}
+
 .trait_entête{
-	width: 15%;
-	margin-top: -16px;
+	width: 8%;
+	margin-top: -18px;
 }
 
 #texte_play
 {
 	text-align: center; 
 	color: white; 
-	font-size: 30px;
+	font-size: 32px;
+	margin-top: -9px;
+	font-family: "Roboto", "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
 #titre_research
 {
 	text-align: center; 
-	color: white; 
+	color: white;
 	margin-bottom: 30px;
+	font-size: 80px;
+	font-weight: bold;
 }
 
 /*-----------------------------------------
@@ -73,23 +83,14 @@
 	background-color: white;
 }
 
-#nom_utilisateur
-{
-	color: green;
-}
-
 /*-----------------------------------------
 				Classement
 -----------------------------------------*/
 
-#classement
+.classement
 {
 	background-color: #eceeef;
-}
-
-#onglet_classement
-{
-	margin-top: 70px;
+	padding-bottom: 60px;
 }
 
 #div_img_podium
@@ -101,9 +102,49 @@
 #img_podium
 {
 	width: 350px;
+	margin: 10px;
 }
 
-#container_classement
+#titre_classement
+{
+	font-weight: bold;
+	font-size: 50px;
+	text-align: center;
+	margin-top: 80px;
+}
+
+#phrase_classement
+{
+	text-align: center;
+	font-size: 18px;
+	margin-bottom: 40px;
+}
+
+.trait_classement
+{
+	width: 14%;
+	margin-top: -18px;
+	border-color: black;
+}
+
+.tableau_classement
+{
+	width: 70%;
+	margin-top: 80px;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+/*-----------------------------------------
+				Historique
+-----------------------------------------*/
+
+#onglet_historique
+{
+	margin-top: 70px;
+}
+
+#container_historique
 {
 	background-color: #eceeef;
 }
@@ -114,7 +155,28 @@
 
 #btn_enregistrer
 {
+	margin-top: 20px;
 	float: right;
+}
+
+#formulaire
+{
+	background-color: #eceeef; 
+	padding-top: 40px; 
+	padding-bottom: 40px;
+}
+
+#nom_questionnaire_titre
+{
+	font-size: 30px;
+}
+
+.trait_separateur_question
+{
+	width: 60%;
+	border-color: black;
+	margin-top: 30px;
+	margin-bottom: 30px;
 }
 
 /*-----------------------------------------
@@ -125,7 +187,6 @@ footer
 {
 	margin-top: 30px;
 	margin-bottom: 15px;
-	
 }
 
 #texte_nom_dev

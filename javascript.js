@@ -40,25 +40,20 @@ $(document).ready(function()
 
 	});*/
 
-	$('form').submit(function(){
-		var message2 = "aze";
+	$('#btn_connexion').click(function(){
 		$.ajax({
 			type:'POST',
-			url:'accueil.php',
-			data : 'pseudo1=' + pseudo1,
-			success:function(retour){
-				alert("SUCCESS:"+pseudo1);
-				
+			url:'header.php',
+			dataType: 'json',
+			success:function(reponse){
+				alert('COUCOU'+reponse.message+reponse.pseudo);
 			},
-			error: function(retour){
-              	alert("ERREUR");
+			error: function(reponse){
+              	alert("Une ERREUR est survenue lors de la connexion");
             }
 		});
-		$('#nom_utilisateur').append("<a id=\"nom_utilisateur\"><span class=\"glyphicon glyphicon-user\"></span>OKAYYYY</a>");
-		alert("DANS LA FONCTION");
+		alert("Dans la fonction");
 	});
-
-	
 
 	/* Permet de fermer une modale avec le bouton Annuler
 	*/
@@ -71,5 +66,4 @@ $(document).ready(function()
 			$('#modalInscrire').modal('hide');
 		}
 	});
-
-});
+});//fin du fichier JS

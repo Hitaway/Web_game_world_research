@@ -1,9 +1,9 @@
-<?php 
-  require("identifiants.php");
+<?php
+  	require("identifiants.php");
 ?>
 
 <?php
-  $message="";  //stocker le message d'erreur qui sera ensuite transmit au JS
+  $message="PAR DEFAUT";  //stocker le message d'erreur qui sera ensuite transmit au JS
 
   if (isset($_POST['pseudo1']) && isset($_POST['mdp1'])){ //On verifie que les variable existe
       if (empty($_POST['pseudo1']) || empty($_POST['mdp1']) || !(trim($_POST['pseudo1'])) || !(trim($_POST['mdp1']))) //Oublie d'un champ
@@ -22,11 +22,6 @@
           $_SESSION['pseudo'] = $data['pseudo'];
           $_SESSION['droit'] = $data['droit'];
           $message = "vous êtes connectés.";
-
-                $message = "OKKKAYYYYYYY";
-                $reponse = array("message" => $message);
-                header('Content-type: application/json');
-                json_encode($reponse);
         }
         else //si MDP incorrect
         {
@@ -35,6 +30,13 @@
         $query->CloseCursor();
       }
   }
+$message="TEST";
+  $reponse = array("message" => $message, "pseudo" => $_SESSION['pseudo']);
+  echo json_encode($reponse);
+
+
+
+
 
   $param = array('nom','prenom','email','pseudo2','mdp2','mdp3');
   //Si $_POST contient les clés nom, prenom, email... et qu'il y a des valeurs associées
@@ -91,17 +93,25 @@
         </ul>
         <ul class="nav navbar-nav navbar-right">
           <?php 
-          if($_SESSION['pseudo']==""){    //s'il n'est pas connecté on affiche les boutton Inscrire ou Connexion
-            echo "<li><a data-toggle=\"modal\" data-target=\"#modalConnexion\"><span class=\"glyphicon glyphicon-log-in\"></span> Connexion</a></li>";
-            echo "<li><a data-toggle=\"modal\" data-target=\"#modalInscrire\"><span class=\"glyphicon glyphicon-user\" ></span> S'inscrire</a></li>";
-          }
-           //echo '<br><br><br><br><br><h1 style="color: red;">PSEUDO'.$_SESSION['pseudo'].'.</h1>';
-          if($_SESSION['pseudo']!=""){    //s'il est connecté on affiche
-            echo "<li><a id=\"nom_utilisateur\"><span class=\"glyphicon glyphicon-user\"></span> Nom de la personne</a></li>";
-            echo "<li><a href=\"deconnexion.php\"><span class=\"glyphicon glyphicon-log-out\"></span> Déconexion</a></li>";
-          }
+	          if($_SESSION['pseudo']==""){    //s'il n'est pas connecté on affiche les boutton Inscrire ou Connexion
+	            echo "<li><a data-toggle=\"modal\" data-target=\"#modalConnexion\"><span class=\"glyphicon glyphicon-log-in\"></span> Connexion</a></li>";
+	            echo "<li><a data-toggle=\"modal\" data-target=\"#modalInscrire\"><span class=\"glyphicon glyphicon-user\" ></span> S'inscrire</a></li>";
+	          }
+	          if($_SESSION['pseudo']!=""){    //s'il est connecté on affiche
+	            echo '<li class="dropdown">
+	          			<a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+	          			<span class="glyphicon glyphicon-user"></span> Nom de la personne <span class="caret"></span></a>
+		          		<ul class="dropdown-menu">
+		            	<li><a href="historique.php">Historique</a></li>';
+		        if($_SESSION['droit']=="admin"){	//Si la personne connecter est admin il peut ajouter des questions
+		           echo '<li><a href="ajouter_question.php">Ajouter Questions</a></li>';
+               echo '<li><a href="gerer_utilisateur.php">Gerer utilisateurs</a></li>';
+               echo '<li><a href="gerer_questionnaire.php">Gerer questionnaires</a></li>';
+            }
+	          	echo '</ul></li>';
+	            echo "<li><a href=\"deconnexion.php\"><span class=\"glyphicon glyphicon-log-out\"></span> Déconexion</a></li>";
+	          }
           ?>
-
         </ul>
   		</div>
 	</nav>
@@ -136,7 +146,7 @@
                 <div class="row">
                   <div class="col-sm-3"></div>
                   <div class="col-sm-9">
-                    <button type="submit" class="btn btn-primary btn_valider">Connexion</button>
+                    <button type="submit" class="btn btn-primary btn_valider" id="btn_connexion">Connexion</button>
                     <button type="button" class="btn btn-danger btn_annuler">Annuler</button>
                   </div>
                 </div>

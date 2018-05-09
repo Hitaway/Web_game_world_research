@@ -13,11 +13,11 @@
 
 	<!--########################## Entête avec le titre #################-->
    
-	    <div id="img_map_marqueur"><img src="Image/map_marqueur.png" alt="img_monde"></div>
+	    <div id="div_img_map_marqueur"><img src="Image/map_marqueur.png" alt="img_monde" id="img_marqueur"></div>
 	    <h1 id="titre_research">RESEARCH</h1>
 	    <hr class="trait_entête">
 	    <hr class="trait_entête">
-	    <p id="texte_play">Play</p>
+	    <p id="texte_play">Jouer au jeu</p>
 	</div>
 
 	<!--########################## Texte descriptif du jeu #################-->
@@ -32,13 +32,16 @@
 
     <!--########################## Classement #################-->
 
-    <div id="classement">
+    <div class="classement">
 	    <div class="container">
-		    <h1 class="display-3">Classement</h1>
+		    <h1 class="display-3" id="titre_classement">CLASSEMENT</h1>
+        <p id="phrase_classement">Bravo aux trois meilleurs joueurs qui ont obtenue les meilleurs scores !</p>
+        <hr class="trait_classement">
+        <hr class="trait_classement">
 		   	<div id="div_img_podium">
 		   		<a href="classement.php"><img src="Image/podium.png" alt="img_podium" id="img_podium"></a>
 		   	</div>
-			<div class="panel panel-default">
+			<div class="panel panel-default tableau_classement">
 				<div class="panel-heading col-lg-12 col-md-12 col-sm-12">Classement</div>
 				<?php afficheClassement($bd, 3); ?>
 			</div>
