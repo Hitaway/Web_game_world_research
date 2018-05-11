@@ -1,3 +1,16 @@
+html 
+{
+  	height: 100%;
+}
+
+body 
+{
+ 	min-height: 100%;
+  	margin: 0;
+  	padding: 0;
+  	position: relative;
+}
+
 /*-----------------------------------------
 				Entête
 -----------------------------------------*/
@@ -113,7 +126,8 @@
 .classement
 {
 	background-color: #eceeef;
-	padding-bottom: 60px;
+	padding-bottom: 170px;
+	bottom: 0;
 }
 
 #div_img_podium
@@ -172,7 +186,7 @@
 {
 	background-color: #eceeef; 
 	padding-top: 40px; 
-	padding-bottom: 40px;
+	padding-bottom: 130px;
 }
 
 #nom_questionnaire_titre
@@ -194,8 +208,13 @@
 
 footer
 {
-	margin-top: 30px;
-	margin-bottom: 15px;
+	padding-top: 40px;
+	padding-bottom: 30px;
+	background-color: white;
+	position: absolute; 
+	bottom: 0; 
+	left: 0; 
+	right: 0;
 }
 
 #texte_nom_dev

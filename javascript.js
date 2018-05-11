@@ -44,10 +44,7 @@ $(document).ready(function()
 		$.ajax({
 			type:'POST',
 			url:'header.php',
-			dataType: 'json',
 			success:function(reponse){
-				console.log(reponse.message);
-				alert('COUCOU'+reponse.message);
 				$('#modalConnexion').modal('show');
 			},
 			error: function(reponse){

@@ -218,7 +218,7 @@
 	        die('<p> Erreur : ' . $e->getMessage() . '</p>');
 	    }
 	    //Si tout les champs sont correcte on retourne true
-	    return true;
+	    return "true";
  	}
 
  	//Verifier si la Longitude et Latitude rentrer est bien un entier
