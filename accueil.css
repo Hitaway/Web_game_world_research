@@ -27,6 +27,24 @@
 	float: left;
 }
 
+#li_entête ul li a
+{
+	color: white;
+	text-decoration-color: rgb(255, 255, 255);
+}
+
+#li_entête ul li a:hover
+{
+	transition-delay: 0s;
+	transition-duration: 0.5s;
+	opacity: 0.78;
+}
+
+#titre_entete_logo
+{
+	color: white;
+}
+
 /*-----------------------------------------
 		Entête avec le titre
 -----------------------------------------*/
@@ -72,6 +90,11 @@
 	margin-bottom: 30px;
 	font-size: 80px;
 	font-weight: bold;
+}
+
+.nav .navbar-nav
+{
+	color: red;
 }
 
 /*-----------------------------------------
@@ -127,26 +150,12 @@
 	border-color: black;
 }
 
-.tableau_classement
+.tableau
 {
 	width: 70%;
 	margin-top: 80px;
 	margin-left: auto;
 	margin-right: auto;
-}
-
-/*-----------------------------------------
-				Historique
------------------------------------------*/
-
-#onglet_historique
-{
-	margin-top: 70px;
-}
-
-#container_historique
-{
-	background-color: #eceeef;
 }
 
 /*-----------------------------------------

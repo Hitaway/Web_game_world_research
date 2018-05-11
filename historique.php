@@ -6,8 +6,8 @@
 ?>
 	<body>
 		<?php require("header.php"); ?>
-	    <div class="container" id="container_historique">
-			<div class="panel panel-default" id="onglet_historique">
+	    <div class="container classement">
+			<div class="panel panel-default tableau">
 				<div class="panel-heading col-lg-12 col-md-12 col-sm-12">Historique</div>
 				<?php afficheHistorique($bd, $_SESSION['pseudo']); ?>
 			</div>

@@ -3,7 +3,7 @@
 ?>
 
 <?php
-  $message="PAR DEFAUT";  //stocker le message d'erreur qui sera ensuite transmit au JS
+  $message="FAILED";  //stocker le message d'erreur qui sera ensuite transmit au JS
 
   if (isset($_POST['pseudo1']) && isset($_POST['mdp1'])){ //On verifie que les variable existe
       if (empty($_POST['pseudo1']) || empty($_POST['mdp1']) || !(trim($_POST['pseudo1'])) || !(trim($_POST['mdp1']))) //Oublie d'un champ
@@ -22,6 +22,7 @@
           $_SESSION['pseudo'] = $data['pseudo'];
           $_SESSION['droit'] = $data['droit'];
           $message = "vous êtes connectés.";
+          echo $message;
         }
         else //si MDP incorrect
         {
@@ -29,14 +30,12 @@
         }
         $query->CloseCursor();
       }
+
   }
-$message="TEST";
-  $reponse = array("message" => $message, "pseudo" => $_SESSION['pseudo']);
-  echo json_encode($reponse);
 
-
-
-
+      $reponse = array("message" => $message);
+      header('Content-type: application/json');
+      echo json_encode($reponse);
 
   $param = array('nom','prenom','email','pseudo2','mdp2','mdp3');
   //Si $_POST contient les clés nom, prenom, email... et qu'il y a des valeurs associées
@@ -83,36 +82,38 @@ $message="TEST";
   		<div class="container-fluid">
   			<!-- regroupe tout pour un meilleur affichage mobile -->
    			<div class="navbar-header">
-      			<a class="navbar-brand navbar-left" href="accueil.php">
+      			<a class="navbar-brand navbar-left" href="accueil.php" id="titre_entete_logo">
       			<img src="Image/logo.png" width="30" height="30" class="d-inline-block align-top navbar-left" id="img_logo" alt="logo_page">  Research</a>
 		    </div>
-        <ul class="nav navbar-nav">
-          <li><a href="accueil.php">Accueil</a></li>
-          <li><a href="classement.php">Classement</a></li>
-          <li><a href="regle.php">Règle</a></li>
-        </ul>
-        <ul class="nav navbar-nav navbar-right">
-          <?php 
-	          if($_SESSION['pseudo']==""){    //s'il n'est pas connecté on affiche les boutton Inscrire ou Connexion
-	            echo "<li><a data-toggle=\"modal\" data-target=\"#modalConnexion\"><span class=\"glyphicon glyphicon-log-in\"></span> Connexion</a></li>";
-	            echo "<li><a data-toggle=\"modal\" data-target=\"#modalInscrire\"><span class=\"glyphicon glyphicon-user\" ></span> S'inscrire</a></li>";
-	          }
-	          if($_SESSION['pseudo']!=""){    //s'il est connecté on affiche
-	            echo '<li class="dropdown">
-	          			<a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-	          			<span class="glyphicon glyphicon-user"></span> Nom de la personne <span class="caret"></span></a>
-		          		<ul class="dropdown-menu">
-		            	<li><a href="historique.php">Historique</a></li>';
-		        if($_SESSION['droit']=="admin"){	//Si la personne connecter est admin il peut ajouter des questions
-		           echo '<li><a href="ajouter_question.php">Ajouter Questions</a></li>';
-               echo '<li><a href="gerer_utilisateur.php">Gerer utilisateurs</a></li>';
-               echo '<li><a href="gerer_questionnaire.php">Gerer questionnaires</a></li>';
-            }
-	          	echo '</ul></li>';
-	            echo "<li><a href=\"deconnexion.php\"><span class=\"glyphicon glyphicon-log-out\"></span> Déconexion</a></li>";
-	          }
-          ?>
-        </ul>
+        <div id="li_entête">
+          <ul class="nav navbar-nav">
+            <li><a href="accueil.php">Accueil</a></li>
+            <li class="li_entête"> <a href="classement.php" >Classement</a></li>
+            <li><a href="regle.php" class="li_entête">Règles</a></li>
+          </ul>
+          <ul class="nav navbar-nav navbar-right">
+            <?php 
+  	          if($_SESSION['pseudo']==""){    //s'il n'est pas connecté on affiche les boutton Inscrire ou Connexion
+  	            echo '<li><a data-toggle="modal" data-target="#modalConnexion" class="li_entête"><span class="glyphicon glyphicon-log-in"></span> Connexion</a></li>';
+  	            echo '<li><a data-toggle="modal" data-target="#modalInscrire" class="li_entête"><span class="glyphicon glyphicon-user" ></span> S\'inscrire</a></li>';
+  	          }
+  	          if($_SESSION['pseudo']!=""){    //s'il est connecté on affiche
+  	            echo '<li class="dropdown">
+  	          			<a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+  	          			<span class="glyphicon glyphicon-user"></span> '.$_SESSION['pseudo'].'<span class="caret"></span></a>
+  		          		<ul class="dropdown-menu">
+  		            	<li><a href="historique.php" style="color: black;">Historique</a></li>';
+    		        if($_SESSION['droit']=="admin"){	//Si la personne connecter est admin il peut ajouter des questions
+    		           echo '<li><a href="ajouter_question.php" style="color: black;">Ajouter Questions</a></li>';
+                   echo '<li><a href="gerer_utilisateur.php" style="color: black;">Gerer utilisateurs</a></li>';
+                   echo '<li><a href="gerer_questionnaire.php" style="color: black;">Gerer questionnaires</a></li>';
+                }
+  	          	echo '</ul></li>';
+  	            echo '<li><a href="deconnexion.php" class="li_entête"><span class="glyphicon glyphicon-log-out"></span> Déconexion</a></li>';
+  	          }
+            ?>
+          </ul>
+        </div>
   		</div>
 	</nav>
 
@@ -124,21 +125,21 @@ $message="TEST";
             <div class="modal-header">
                   <h4 class="modal-title">Identification</h4>
                 </div>
-            <form class="form-horizontal" method="post">
+            <form class="form-horizontal" method="post" onsubmit="self.close()">
               <div class="modal-body">
                 <div class="form-group">
                   <label for="pseudo1" class="col-sm-3 control-label">Pseudo</label>
                   <div class="col-sm-9">
-                    <input type="text" class="form-control" name="pseudo1" id="pseudo1" placeholder="Entrez votre pseudo..." />
+                    <input type="text" class="form-control" name="pseudo1" id="pseudo1" value="Hitaway" placeholder="Entrez votre pseudo..." />
                   </div>
                 </div>
                 <div class="form-group">
                   <label for="mdp1" class="col-sm-3 control-label">Mot de passe</label>
                   <div class="col-sm-9">
-                    <input type="password" class="form-control form-control-warning" name="mdp1" id="mdp1" placeholder="Entrez votre mot de passe..." />
-                      <span class="help-block" id="error-msg">
-                          <p class="text-danger"></p> <!-- EN TRAVAUX -->
-                      </span>
+                    <input type="password" class="form-control form-control-warning" name="mdp1" id="mdp1" value="azerty" placeholder="Entrez votre mot de passe..." />
+                      <!--<span class="help-block" id="error-msg">
+                          <p class="text-danger"></p> EN TRAVAUX
+                      </span>-->
                   </div>
                 </div>
               </div>

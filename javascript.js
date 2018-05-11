@@ -40,19 +40,21 @@ $(document).ready(function()
 
 	});*/
 
-	$('#btn_connexion').click(function(){
+	$('form').submit(function(){
 		$.ajax({
 			type:'POST',
 			url:'header.php',
 			dataType: 'json',
 			success:function(reponse){
-				alert('COUCOU'+reponse.message+reponse.pseudo);
+				console.log(reponse.message);
+				alert('COUCOU'+reponse.message);
+				$('#modalConnexion').modal('show');
 			},
 			error: function(reponse){
               	alert("Une ERREUR est survenue lors de la connexion");
             }
 		});
-		alert("Dans la fonction");
+		alert("Evenement clique bouton connexion");
 	});
 
 	/* Permet de fermer une modale avec le bouton Annuler

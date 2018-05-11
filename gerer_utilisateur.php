@@ -7,7 +7,7 @@
 	<body>
 		<?php require("header.php"); ?>
 	    <div class="container classement">
-			<div class="panel panel-default tableau_classement">
+			<div class="panel panel-default tableau">
 				<div class="panel-heading col-lg-12 col-md-12 col-sm-12">Utilisateurs</div>
 				<?php  
 					if(isset($_GET['delete']) && trim($_GET['delete'])){
