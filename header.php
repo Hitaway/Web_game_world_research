@@ -3,10 +3,19 @@
 ?>
 
 <?php
+  $erreur_connexion = array();
+
+ /*echo '<form method="post"><input type="hidden" name="erreur" id="erreur" placeholder="" /></form>';
+  $_POST['erreur']="true";
+  $erreur ="cuocu";
+  echo $_POST['erreur'];
+  $_GET['erreur']="false";*/
+
   if (isset($_POST['pseudo1']) && isset($_POST['mdp1'])){ //On verifie que les variable existe
       if (empty($_POST['pseudo1']) || empty($_POST['mdp1']) || !(trim($_POST['pseudo1'])) || !(trim($_POST['mdp1']))) //Oublie d'un champ
       {
-        $_POST['erreur'] = "veillez saisir tout les champs.";
+        $erreur_connexion['saisie'] = "Veillez saisir tout les champs";
+        /*$_POST['erreur']="true";*/
       }
       else 
       {
@@ -15,7 +24,7 @@
         $query->execute();
         $data=$query->fetch();
         //On check le mot de passe
-        if ($data['mdp'] == md5($_POST['mdp1'])) // MDP correct
+        if ($data['mdp'] == md5($_POST['mdp1'].$data['grain_de_sel'])) // MDP correct
         {
           $_SESSION['pseudo'] = $data['pseudo'];
           $_SESSION['droit'] = $data['droit'];
@@ -26,26 +35,25 @@
         }
         else //si MDP incorrect
         {
-          $_POST['erreur'] = "Identifiant ou pseudo incorrect";
+          $erreur_connexion['identifiant'] = "Identifiant ou pseudo incorrect";
+          /*$_POST['erreur']="true";*/
         }
         $query->CloseCursor();
       }
-
   }
-
-     /* $reponse = array("message" => $message);
-      header('Content-type: application/json');
-      echo json_encode($reponse);*/
+  /*echo $_POST['erreur'];*/
 
   $param = array('nom','prenom','email','pseudo2','mdp2','mdp3');
+  $erreur_inscription = array();
   //Si $_POST contient les clés nom, prenom, email... et qu'il y a des valeurs associées
   if(testValeurExist($param,$_POST))
   { 
       if(testPasVide($param,$_POST))
       {
-        $verifSaisie=verifSaisieUtilisateur($bd, $_POST);
-        if($verifSaisie == "true"){
-          $sql = 'INSERT INTO UTILISATEURS (pseudo, prenom, nom, email, mdp, date_inscription, droit) VALUES (:pseudo, :prenom, :nom, :email, :mdp, :date_inscription, :droit)';
+        $erreur_inscription = verifSaisieUtilisateur($bd, $_POST);
+        if(empty($erreur_inscription)){
+          $sql = 'INSERT INTO UTILISATEURS (pseudo, prenom, nom, email, mdp, grain_de_sel, date_inscription, droit) VALUES (:pseudo, :prenom, :nom, :email, :mdp, :grain_de_sel, :date_inscription, :droit)';
+          $grain_de_sel = random_str();
           try
           {
               $req = $bd->prepare($sql);
@@ -53,7 +61,8 @@
               $req->bindValue(':nom',htmlspecialchars($_POST['nom']));
               $req->bindValue(':prenom',htmlspecialchars($_POST['prenom']));
               $req->bindValue(':email',htmlspecialchars($_POST['email']));
-              $req->bindValue(':mdp',htmlspecialchars(md5($_POST['mdp2'])));
+              $req->bindValue(':mdp',htmlspecialchars(md5($_POST['mdp2'].$grain_de_sel)));
+              $req->bindValue(':grain_de_sel',htmlspecialchars($grain_de_sel)); 
               $req->bindValue(':date_inscription',date("Y-m-d"));
               $req->bindValue(':droit',"user");
               $req->execute();
@@ -62,15 +71,15 @@
           {
             die('<p>Erreur[' .$e->getCode().'] : ' .$e->getMessage() . '</p>');
           }
-        }
-        else
-        {
-          $message=$verifSaisie;
+          echo '<div class="alert alert-success alert-dismissible" role="alert">
+                  <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                  Merci pour votre inscription ! Votre compte a bien été créé. 
+                </div>';
         }
       }
       else
       {
-        $message="Des valeurs sont vide";
+        $erreur_inscription['saisie'] = "Veillez saisir tout les champs";
       }
   }
 ?>
@@ -123,7 +132,7 @@
             <div class="modal-header">
                   <h4 class="modal-title">Identification</h4>
                 </div>
-            <form class="form-horizontal" method="post" onsubmit="self.close()">
+            <form class="form-horizontal" method="post">
               <div class="modal-body">
                 <div class="form-group">
                   <label for="pseudo1" class="col-sm-3 control-label">Pseudo</label>
@@ -131,25 +140,25 @@
                     <input type="text" class="form-control" name="pseudo1" id="pseudo1" value="Hitaway" placeholder="Entrez votre pseudo..." />
                   </div>
                 </div>
-                <?php 
-                if(isset($_POST['erreur']) && trim($_POST['erreur']))
-                  echo '<div class="form-group has-error">
-                          <label for="mdp1" class="col-sm-3 control-label" style="color: black;">Mot de passe</label>
-                          <div class="col-sm-9">
-                            <input type="password" class="form-control form-control-warning" name="mdp1" id="mdp1" value="azerty" placeholder="Entrez votre mot de passe..." />
-                            <span class="help-block" id="valid-msg">
-                              <strong>'.$_POST['erreur'].'</strong>
-                            </span>
-                          </div>
-                        </div>';
-                else
-                  echo '<div class="form-group">
-                          <label for="mdp1" class="col-sm-3 control-label">Mot de passe</label>
-                          <div class="col-sm-9">
-                            <input type="password" class="form-control" name="mdp1" id="mdp1" value="azerty" placeholder="Entrez votre mot de passe..." />
-                          </div>
-                        </div>';
-                ?>
+                <div class="form-group">
+                  <label for="mdp1" class="col-sm-3 control-label">Mot de passe</label>
+                    <div class="col-sm-9">
+                      <input type="password" class="form-control" name="mdp1" id="mdp1" value="azerty" placeholder="Entrez votre mot de passe..." />
+                    </div>
+                </div>          
+                  <?php
+                    if(isset($erreur_connexion) && !(empty($erreur_connexion))){
+                      echo '<div class="form-group">';
+                      echo '<div class="col-sm-3"></div>';
+                      echo '<div class="col-sm-9">';
+                      echo '<div class="alert alert-danger ">';
+                        foreach ($erreur_connexion as $error)
+                          echo $error;
+                      echo '</div>';
+                      echo '</div>';
+                      echo '</div>';
+                    }
+                  ?>
               </div>
               <div class="modal-footer">
                 <div class="row">
@@ -208,6 +217,22 @@
                 <div class="col-sm-9">
                   <input type="password" class="form-control" name="mdp3" id="mdp3" placeholder="Veuillez confirmer votre mot de passe..." />
                 </div>
+              </div>
+              <div class="form-group"> 
+              <?php  
+                if(isset($erreur_inscription) && !(empty($erreur_inscription))){
+                  echo '<div class="col-sm-3"></div>';
+                   echo '<div class="col-sm-9">';
+                  echo '<div class="alert alert-danger ">';
+                  echo '<p>Vous n\'avez pas rempli le formulaire correctement</p>';
+                  echo '<ul>';
+                    foreach ($erreur_inscription as $error)
+                      echo '<li>'.$error.'</li>';
+                  echo '</ul>';
+                  echo '</div>';
+                  echo '</div>';
+                }
+              ?>
               </div>
             </div>
             <div class="modal-footer">

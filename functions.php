@@ -56,14 +56,14 @@
 				echo '<table class="table">';
 				//On affiche les en-têtes
 				echo '<thead>';
-				echo '<tr><th>Pseudo</th> <th>prenom</th><th>nom</th><th>email</th><th>mot de passe</th><th>date inscription</th><th>droit</th></tr>';
+				echo '<tr><th>Pseudo</th> <th>prenom</th><th>nom</th><th>email</th><th>date inscription</th><th>droit</th></tr>';
 				echo '</thead>';
 				echo '<tbody>';
 		 		do
 				{
 					echo '<tr>';
 					echo '<td>'.$res['pseudo'].'</td><td>'.$res['prenom'].'</td><td>'.$res['nom'].'</td><td>'
-						.$res['email'].'</td><td>'.$res['mdp'].'</td><td>'.$res['date_inscription'].'</td><td>'
+						.$res['email'].'</td><td>'.$res['date_inscription'].'</td><td>'
 						.$res['droit'].'</td>';
 					echo '<td><a href="gerer_utilisateur.php?delete='.urlencode($res['pseudo']).'"><span class="glyphicon glyphicon-trash"></span></a></td>';
 					echo '</tr>';
@@ -97,13 +97,23 @@
 				echo '<tr><th>Nom questionnaire</th><th>intitule question</th><th>latitude</th><th>longitude</th></tr>';
 				echo '</thead>';
 				echo '<tbody>';
+				$num_question = 1;
 		 		do
 				{
 					echo '<tr>';
-					echo '<td>'.$res['nom_questionnaire'].'</td><td>'.$res['intitule'].'</td><td>'.$res['latitude'].'</td>
+					if($num_question == 1)
+						echo '<td>'.$res['nom_questionnaire'].'</td>';
+					else
+						echo '<td></td>';
+					echo'<td>'.$res['intitule'].'</td><td>'.$res['latitude'].'</td>
 					<td>'.$res['longitude'].'</td>';
-					echo '<td><a href="gerer_questionnaire.php?delete='.urlencode($res['nom_questionnaire']).'"><span class="glyphicon glyphicon-trash"></span></a></td>';
+					if($num_question == 1)
+						echo '<td><a href="gerer_questionnaire.php?delete='.urlencode($res['nom_questionnaire']).'"><span class="glyphicon glyphicon-trash"></span></a></td>';
 					echo '</tr>';
+					if($num_question == 7)
+						$num_question = 1;
+					else
+						$num_question ++;
 				}while($res = $req->fetch(PDO::FETCH_ASSOC));
 			}
 			else
@@ -117,7 +127,8 @@
 		echo '</table>';
 	}
 
-	function afficheHistorique($bd, $pseudo){
+	function afficheHistorique($bd, $pseudo)
+	{
 		try
 		{
 			$req = $bd->prepare('SELECT * FROM HISTORIQUE WHERE pseudo = :pseudo ORDER BY date_partie DESC');
@@ -177,26 +188,27 @@
 
 	function verifSaisieUtilisateur($bd, $tableau)
   	{
+  		$error = array();
 	    if(strlen($tableau['nom']) >= 35)
-	      return "nom trop long";
+	      $error['nom_long'] = "Nom trop long";
 
 	    if(strlen($tableau['prenom']) >= 35)
-	      return "prenom trop long";
+	      $error['prenom_long'] = "Prenom trop long";
 
 	    if(strlen($tableau['pseudo2']) >= 35)
-	      return "pseudo trop long";
+	      $error['pseudo_long'] = "Pseudo trop long";
 
 	    if(strlen($tableau['mail']) >= 60)
-	      return "adresse mail trop long";
+	      $error['mail_court'] = "Adresse mail trop long";
 
 	    if(strlen($tableau['mdp2']) >= 150 || strlen($tableau['mdp3']) >= 150)
-	      return "mdp trop long";
+	      $error['mdp_long'] = "Mot de passe trop long";
 
 	    if(strlen($tableau['mdp3']) < 8 || strlen($tableau['mdp2']) < 8)
-	      return "mdp trop court";
+	      $error['mdp_court'] = "Mot de passe trop court";
 
 	    if($tableau['mdp3'] != $tableau['mdp2'])
-	      return "mdp de confirmation different du mdp";
+	      $error['different'] = "Mot de passe de confirmation different";
 	        
 	    try
 	    {
@@ -206,9 +218,9 @@
 
 	      do{
 	          if($res['email'] == $tableau['email'])
-	            return "mail deja utiliser";
+	            $error['email_utilise'] = "Mail déja utilisé";
 	          if($res['pseudo'] == $tableau['pseudo2'])
-	            return "pseudo deja utiliser";
+	            $error['pseudo_utilise'] =  "Pseudo déja utilisé";
 	      }while($res = $req->fetch(PDO::FETCH_ASSOC));
 	      $req->CloseCursor();
 	    }
@@ -217,15 +229,14 @@
 	        // On termine le script en affichant le n de l'erreur ainsi que le message 
 	        die('<p> Erreur : ' . $e->getMessage() . '</p>');
 	    }
-	    //Si tout les champs sont correcte on retourne true
-	    return "true";
+
+	    return $error;
  	}
 
  	//Verifier si la Longitude et Latitude rentrer est bien un entier
  	function longOuLatValide($value){
  		return preg_match("#^[-]?(([0-9]+\.[0-9]+)|([0-9]+))$#", $value);
  	}
-
 
  	function VerifQuestionEnDouble($tableau){
  		for ($i = 1; $i <= 7; $i++){
@@ -235,5 +246,63 @@
  			}
  		}
  		return true;	//S'il n'y a pas de doublons dans les questions on retourne true
+ 	}
+
+ 	function VerifQuestionnaireDejaExistant($bd, $tableau)
+ 	{
+ 		try
+	    {
+		    $req = $bd->prepare('SELECT * FROM QUESTIONNAIRES');
+		    $req->execute();
+		    $res = $req->fetch(PDO::FETCH_ASSOC);
+
+		    do{
+		        if($res['nom_questionnaire'] == $tableau['nom_questionnaire'])
+		     	    return false;
+		    }while($res = $req->fetch(PDO::FETCH_ASSOC));
+		    $req->CloseCursor();
+	    }
+	    catch(PDOException $e)
+	    {
+	        // On termine le script en affichant le n de l'erreur ainsi que le message 
+	        die('<p> Erreur : ' . $e->getMessage() . '</p>');
+	    }
+	    return true;
+ 	}
+
+ 	function formulaire_ajouter_question_valide($bd,$cle,$tableau)
+ 	{
+ 		$error = array();
+ 		if(testPasVide($cle,$tableau) == false)
+			$error['champ_vide'] = "Veillez saisir tout les champs";
+		else
+		{
+	 		if((longOuLatValide($tableau['latitude1']) && longOuLatValide($tableau['latitude2']) &&
+	 			longOuLatValide($tableau['latitude3']) && longOuLatValide($tableau['latitude4']) &&
+				longOuLatValide($tableau['latitude5']) && longOuLatValide($tableau['latitude6']) &&
+				longOuLatValide($tableau['latitude7'])) == false)
+					$error['latitude']= "Valeur pour la latitude non valide";
+
+			if((longOuLatValide($tableau['longitude1']) && longOuLatValide($tableau['longitude2']) &&
+				longOuLatValide($tableau['longitude3']) && longOuLatValide($tableau['longitude4']) &&
+				longOuLatValide($tableau['longitude5']) && longOuLatValide($tableau['longitude6']) &&
+				longOuLatValide($tableau['longitude7'])) == false)
+					$error['longitude'] = "Valeur pour la longitude non valide";
+
+			if(VerifQuestionEnDouble($tableau) == false)
+				$error['question_double'] = "Saisir des questions différente pour chaque champ";
+
+			if(VerifQuestionnaireDejaExistant($bd, $tableau) == false)
+				$error['questionnaire_existant'] = "Le questionnaire que vous voulez ajoutez éxiste déja";
+		}
+
+		return $error;
+ 	}
+
+ 	//Renvoi une chaine de caractère aléatoire
+ 	function random_str()
+ 	{
+ 		$alphabet = "0123456789azertyuiopqsdfghjklmwxcvbnAZERTYUIOPQSDFGHJKLMWXCVBN";
+ 		return substr(str_shuffle(str_repeat($alphabet, 60)), 0, 60);
  	}
 ?>

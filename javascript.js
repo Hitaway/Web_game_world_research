@@ -40,11 +40,15 @@ $(document).ready(function()
 
 	});*/
 
-	$('form').submit(function(){
+	$('form').submit(function(e){
 		$.ajax({
 			type:'POST',
 			url:'header.php',
+			data: 'erreur=' + erreur,
 			success:function(reponse){
+				//console.log("erreur="+erreur);
+				 /*console.log($("#erreur"));
+				 console.log($('#erreur').attr('value'));*/
 				$('#modalConnexion').modal('show');
 			},
 			error: function(reponse){

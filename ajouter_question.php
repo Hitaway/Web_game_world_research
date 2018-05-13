@@ -39,81 +39,83 @@
 		            </div>
 				</div>';   
 			}
-	    ?>
-	    <div class="row">
-        	<div class="col-xs-10 col-sm-10 col-md-10 col-lg-10"></div>
-            <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1">
-                <button type="submit" class="btn btn-primary" id="btn_enregistrer">Enregistrer</button>   
-            </div>
-        </div> 
-    </form>
 
-	<?php 
-	$param = array('nom_questionnaire','question1','latitude1','longitude1',
-							'question2','latitude2','longitude2',
-							'question3','latitude3','longitude3',
-							'question4','latitude4','longitude4',
-							'question5','latitude5','longitude5',
-							'question6','latitude6','longitude6',
-							'question7','latitude7','longitude7');
+			$error_ajout_question = array();
+			$param = array('nom_questionnaire','question1','latitude1','longitude1',
+									'question2','latitude2','longitude2',
+									'question3','latitude3','longitude3',
+									'question4','latitude4','longitude4',
+									'question5','latitude5','longitude5',
+									'question6','latitude6','longitude6',
+									'question7','latitude7','longitude7');
 
-	if(testValeurExist($param,$_POST))
-  	{
-  		if(testPasVide($param,$_POST))
-  		{
-  			//Test si la longitude et latitude sont bien des float
-        	if(longOuLatValide($_POST['latitude1']) && longOuLatValide($_POST['longitude1']) &&
-        		longOuLatValide($_POST['latitude2']) && longOuLatValide($_POST['longitude2']) &&
-    			longOuLatValide($_POST['latitude3']) && longOuLatValide($_POST['longitude3']) &&
-				longOuLatValide($_POST['latitude4']) && longOuLatValide($_POST['longitude4']) &&
-				longOuLatValide($_POST['latitude5']) && longOuLatValide($_POST['longitude5']) &&
-				longOuLatValide($_POST['latitude6']) && longOuLatValide($_POST['longitude6']) &&
-				longOuLatValide($_POST['latitude7']) && longOuLatValide($_POST['longitude7']))
-        	{
-        		if(VerifQuestionEnDouble($_POST)){
-	        		$sql = 'INSERT INTO QUESTIONNAIRES (nom_questionnaire) VALUES (:nom_questionnaire)';
-	        		$req = $bd->prepare($sql);
+			if(testValeurExist($param,$_POST))
+		  	{
+		  		$error_ajout_question = formulaire_ajouter_question_valide($bd,$param,$_POST);
+		        if(empty($error_ajout_question)){
+			   		$sql = 'INSERT INTO QUESTIONNAIRES (nom_questionnaire) VALUES (:nom_questionnaire)';
+		     		$req = $bd->prepare($sql);
 		            $req->bindValue(':nom_questionnaire',htmlspecialchars($_POST['nom_questionnaire']));
-		            $req->execute();
-		            $req->CloseCursor();
+				    $req->execute();
+			        $req->CloseCursor();
+				    try
+				    {
+				        $sql = 'INSERT INTO QUESTIONS (intitule, nom_questionnaire, latitude, longitude) VALUES (:intitule, :nom_questionnaire, :latitude, :longitude)';
+				        //Ajouter les 7 questions
+				        for ($i = 1; $i <= 7; $i++)
+				        {
+					        $req = $bd->prepare($sql);
+					        $req->bindValue(':intitule',htmlspecialchars($_POST['question'.$i]));
+					        $req->bindValue(':nom_questionnaire',htmlspecialchars($_POST['nom_questionnaire']));
+					        $req->bindValue(':latitude',htmlspecialchars($_POST['latitude'.$i]));
+					        $req->bindValue(':longitude',htmlspecialchars($_POST['longitude'.$i]));
+					        $req->execute();
+					        $req->CloseCursor(); 
+					        //suprimer variable POST après insertion
+					        unset($_POST['question'.$i], $_POST['latitude'.$i], $_POST['longitude'.$i]);
+					    }
+					    echo '<div class="row form-group">';
+                      	echo '<div class="col-xs-2 col-sm-2 col-md-2 col-lg-2"></div>';
+                      	echo '<div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">';
+				    	echo '<div class="alert alert-success alert-dismissible" role="alert">
+                  				<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                  					Le questionnaires <strong>'.$_POST['nom_questionnaire'].'</strong> à bien été créer.
+                			  </div>';
+                      	echo '</div>';
+                      	echo '</div>';
+                		//suprimer variable POST après insertion
+				    	unset($_POST['nom_questionnaire']);
+				    }
+					catch(PDOException $e)
+				    {
+				        die('<p>Erreur[' .$e->getCode().'] : ' .$e->getMessage() . '</p>');
+				    }
+				}
+		  	}
 
-		          	try
-		          	{
-		          		$sql = 'INSERT INTO QUESTIONS (intitule, nom_questionnaire, latitude, longitude) VALUES (:intitule, :nom_questionnaire, :latitude, :longitude)';
-		          		//Ajouter les 7 questions
-		          		for ($i = 1; $i <= 7; $i++)
-		          		{
-			            	$req = $bd->prepare($sql);
-			              	$req->bindValue(':intitule',htmlspecialchars($_POST['question'.$i]));
-			              	$req->bindValue(':nom_questionnaire',htmlspecialchars($_POST['nom_questionnaire']));
-			              	$req->bindValue(':latitude',htmlspecialchars($_POST['latitude'.$i]));
-			              	$req->bindValue(':longitude',htmlspecialchars($_POST['longitude'.$i]));
-			              	$req->execute();
-			              	$req->CloseCursor();
-			            }
-		          	}
-		         	catch(PDOException $e)
-		          	{
-		            	die('<p>Erreur[' .$e->getCode().'] : ' .$e->getMessage() . '</p>');
-		          	}
-		        }
-		        else
-		        {
-		        	echo "Il y a des questions en double";
-		        }
-  			}
-  			else
-  			{
-  				echo "La longitude et latitude ne sont pas des float";
-  			}
-  		}
-  		else
-  		{
-  			echo "des valeurs sont vide transmettre en JSON au JS pour voir qu'es qui est vide et mettre le contour en rouge";
-  		}
-  	} 
-	?>
-
+		  	if(isset($error_ajout_question) && !(empty($error_ajout_question))){
+		  		echo '<div class="row form-group">';
+                echo '<div class="col-xs-2 col-sm-2 col-md-2 col-lg-2"></div>';
+                echo '<div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">';
+                echo '<div class="alert alert-danger ">';
+                echo '<p>Vous n\'avez pas rempli le formulaire correctement</p>';
+                echo '<ul>';
+                foreach ($error_ajout_question as $error)
+                    echo '<li>'.$error.'</li>';
+                echo '</ul>';
+                echo '</div>';
+                echo '</div>';
+                echo '</div>';
+            }
+            unset($_POST);
+			?>
+		    <div class="row">
+        		<div class="col-xs-10 col-sm-10 col-md-10 col-lg-10"></div>
+	            <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1">
+	                <button type="submit" class="btn btn-primary" id="btn_enregistrer">Enregistrer</button>   
+	            </div>
+        	</div> 
+    </form>
 	<?php require("footer.php"); ?>
 	</body>
 </html>

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : localhost:8889
--- Généré le :  jeu. 03 mai 2018 à 08:54
+-- Généré le :  Dim 13 mai 2018 à 21:50
 -- Version du serveur :  5.6.35
 -- Version de PHP :  7.1.8
 
@@ -90,7 +90,7 @@ CREATE TABLE `QUESTIONNAIRES` (
 --
 
 INSERT INTO `QUESTIONNAIRES` (`nom_questionnaire`) VALUES
-('7 merveille du monde');
+('a');
 
 -- --------------------------------------------------------
 
@@ -100,21 +100,23 @@ INSERT INTO `QUESTIONNAIRES` (`nom_questionnaire`) VALUES
 
 CREATE TABLE `QUESTIONS` (
   `intitule` varchar(200) NOT NULL,
-  `nom_questionaire` varchar(100) NOT NULL
+  `nom_questionnaire` varchar(100) NOT NULL,
+  `latitude` float NOT NULL,
+  `longitude` float NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Déchargement des données de la table `QUESTIONS`
 --
 
-INSERT INTO `QUESTIONS` (`intitule`, `nom_questionaire`) VALUES
-('Ou est la Grande Muraille de Chine (facile) ?', '7 merveille du monde'),
-('Ou est la statue du Christ Rédempteur aussi appellé Corcovado ?', '7 merveille du monde'),
-('Ou est la tour Eiffel ?', '7 merveille du monde'),
-('Ou est le Colisée ?', '7 merveille du monde'),
-('Ou est le Machu Picchu ?', '7 merveille du monde'),
-('Ou est le Taj Mahal ?', '7 merveille du monde'),
-('Ou sont les Pyramide de Khéops ?', '7 merveille du monde');
+INSERT INTO `QUESTIONS` (`intitule`, `nom_questionnaire`, `latitude`, `longitude`) VALUES
+('e', 'a', 123, 123),
+('i', 'a', 123, 123),
+('r', 'a', 123, 123),
+('t', 'a', 123, 123),
+('u', 'a', 123, 123),
+('y', 'a', 123, 123),
+('z', 'a', 123, 123);
 
 -- --------------------------------------------------------
 
@@ -128,6 +130,7 @@ CREATE TABLE `UTILISATEURS` (
   `nom` varchar(35) DEFAULT NULL,
   `email` varchar(60) DEFAULT NULL,
   `mdp` varchar(150) DEFAULT NULL,
+  `grain_de_sel` varchar(100) NOT NULL,
   `date_inscription` date DEFAULT NULL,
   `droit` set('admin','user') NOT NULL COMMENT 'droit utilisateur/admin'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -136,13 +139,14 @@ CREATE TABLE `UTILISATEURS` (
 -- Déchargement des données de la table `UTILISATEURS`
 --
 
-INSERT INTO `UTILISATEURS` (`pseudo`, `prenom`, `nom`, `email`, `mdp`, `date_inscription`, `droit`) VALUES
-('Hitaway', 'Quentin', 'Rat', 'machin@hotmail.fr', 'azerty', '0000-00-00', 'admin'),
-('Kinstaar', 'Piong', 'Wang', 'machin3@hotmail.fr', 'azerty', '2018-04-12', 'user'),
-('Micka', 'Mickael', 'André', 'machin4@hotmail.fr', 'azerty', '2018-04-12', 'user'),
-('Robi62', 'Robin', 'Delanoe', 'machin5@hotmail.fr', 'azerty', '2018-04-12', 'user'),
-('Slimane93', 'Slimane', 'Kouba', 'machin2@hotmail.fr', 'azerty', '2018-04-10', 'admin'),
-('zaeaeaze', 'zaeaze', 'aazezae', 'machin@hotmail.fr', 'azertyazerty', '2018-04-29', 'user');
+INSERT INTO `UTILISATEURS` (`pseudo`, `prenom`, `nom`, `email`, `mdp`, `grain_de_sel`, `date_inscription`, `droit`) VALUES
+('bibi', 'toto', 'tutu', 'lal@hotmail.fr', '8b4dd7a9d667a2529e38be26aa3385a9', '101RM8uDeZak3CcMVN2IYdsKHaS8nzqgrk7CBpuvwoAbxyEHFJb03zMr17yK', '2018-05-13', 'user'),
+('Hitaway', 'Quentin', 'Rat', 'machin@hotmail.fr', '9d6af38d8094d466ed895b9968e6c8d8', 'p5bEHCQM62kVsgWcyMeUISfbNF5ESfJN6Iawjta7GUHYmLLWpgjdjWeachOh', '0000-00-00', 'admin'),
+('Kinstaar', 'Piong', 'Wang', 'machin3@hotmail.fr', '9d6af38d8094d466ed895b9968e6c8d8', 'p5bEHCQM62kVsgWcyMeUISfbNF5ESfJN6Iawjta7GUHYmLLWpgjdjWeachOh', '2018-04-12', 'user'),
+('Micka', 'Mickael', 'André', 'machin4@hotmail.fr', '9d6af38d8094d466ed895b9968e6c8d8', 'p5bEHCQM62kVsgWcyMeUISfbNF5ESfJN6Iawjta7GUHYmLLWpgjdjWeachOh', '2018-04-12', 'user'),
+('Robi62', 'Robin', 'Delanoe', 'machin5@hotmail.fr', '9d6af38d8094d466ed895b9968e6c8d8', 'p5bEHCQM62kVsgWcyMeUISfbNF5ESfJN6Iawjta7GUHYmLLWpgjdjWeachOh', '2018-04-12', 'user'),
+('Slimane93', 'Slimane', 'Kouba', 'machin2@hotmail.fr', '9d6af38d8094d466ed895b9968e6c8d8', 'p5bEHCQM62kVsgWcyMeUISfbNF5ESfJN6Iawjta7GUHYmLLWpgjdjWeachOh', '2018-04-10', 'admin'),
+('titi', 'toto', 'tata', 'bidule@hotmail.com', '9d6af38d8094d466ed895b9968e6c8d8', 'p5bEHCQM62kVsgWcyMeUISfbNF5ESfJN6Iawjta7GUHYmLLWpgjdjWeachOh', '2018-05-13', 'user');
 
 --
 -- Index pour les tables déchargées
@@ -172,8 +176,8 @@ ALTER TABLE `QUESTIONNAIRES`
 -- Index pour la table `QUESTIONS`
 --
 ALTER TABLE `QUESTIONS`
-  ADD PRIMARY KEY (`intitule`,`nom_questionaire`),
-  ADD KEY `fk_questions_nom_question_questionaires` (`nom_questionaire`);
+  ADD PRIMARY KEY (`intitule`,`nom_questionnaire`),
+  ADD KEY `fk_questions_nom_question_questionnaires` (`nom_questionnaire`) USING BTREE;
 
 --
 -- Index pour la table `UTILISATEURS`
@@ -202,4 +206,4 @@ ALTER TABLE `HISTORIQUE`
 -- Contraintes pour la table `QUESTIONS`
 --
 ALTER TABLE `QUESTIONS`
-  ADD CONSTRAINT `fk_questions_nom_question_questionaires` FOREIGN KEY (`nom_questionaire`) REFERENCES `QUESTIONNAIRES` (`nom_questionnaire`);
+  ADD CONSTRAINT `fk_questions_nom_question_questionaires` FOREIGN KEY (`nom_questionnaire`) REFERENCES `QUESTIONNAIRES` (`nom_questionnaire`);
