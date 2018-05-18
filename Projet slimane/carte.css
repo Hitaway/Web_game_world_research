@@ -1,0 +1,25 @@
+.carousel-control.right {
+background-image: none;
+}
+.carousel-control.left {
+background-image: none;
+}
+
+#image_principale_kheops {
+
+width:300px;
+height: 200px;
+float:left;
+padding-bottom: 10px;
+margin-left: 200px;
+overflow: hidden;
+-webkit-border-radius:30px;
+-moz-border-radius:30px;
+}
+
+.image_kheops{
+
+height: 300px ;
+width:900px;
+}
+
