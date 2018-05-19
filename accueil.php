@@ -17,7 +17,51 @@
 	    <h1 id="titre_research">RESEARCH</h1>
 	    <hr class="trait_entête">
 	    <hr class="trait_entête">
-	    <p id="texte_play">Jouer au jeu</p>
+	    <p id="texte_play"><a data-toggle="modal" data-target="#modalChoixQuestionnaire" style="text-decoration: none; color: white;">Jouer au jeu</a></p>
+	</div>
+
+  	<!--########################## Modal #################-->
+
+	<div id="modalChoixQuestionnaire" class="modal fade" role="dialog">
+	    <div class="modal-dialog">
+	        <div class="modal-content">
+	            <div class="modal-header">
+	            	<h4 class="modal-title">Choix du questionnaires</h4>
+	            </div>
+	            <div class="modal-body">      
+	                <?php       
+						try
+						{
+							$req = $bd->prepare('SELECT * FROM QUESTIONNAIRES');
+							$req->execute();
+							$res = $req->fetch(PDO::FETCH_ASSOC);
+
+							//Il y a au moins une ligne
+							if($res)
+							{
+						 		do
+								{
+									if(isset($_SESSION['pseudo']) && trim($_SESSION['pseudo'])!="" && $res['nom_questionnaire']!="7 merveille du monde"){
+										echo '<button><a>'.$res['nom_questionnaire'].'</a></button>';
+									}
+								}while($res = $req->fetch(PDO::FETCH_ASSOC));
+							}
+							else
+								echo '<p style="text-align: center;">Aucun questionnaires dans la base de données </p>';
+							}
+							catch(PDOException $e)
+							{
+							  	// On termine le script en affichant le n de l'erreur ainsi que le message 
+							   	die('<p> Erreur : ' . $e->getMessage() . '</p>');
+							}
+					    }
+					?>
+	            </div>
+	            <div class="modal-footer">
+	            	<button type="button" class="btn btn-danger btn_annuler">Annuler</button>
+	            </div>
+	        </div>
+	    </div>
 	</div>
 
 	<!--########################## Texte descriptif du jeu #################-->

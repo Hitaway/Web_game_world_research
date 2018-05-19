@@ -40,16 +40,23 @@ $(document).ready(function()
 
 	});*/
 
+	window.setTimeout(function(){
+		$(".notification").fadeTo(500, 0).slideUp(500, function(){
+		$(this).remove(); 
+		});
+	}, 4000);
+
 	$('form').submit(function(e){
 		$.ajax({
 			type:'POST',
 			url:'header.php',
-			data: 'erreur=' + erreur,
+			//data: 'erreur=' + erreur,
 			success:function(reponse){
-				//console.log("erreur="+erreur);
-				 /*console.log($("#erreur"));
-				 console.log($('#erreur').attr('value'));*/
-				$('#modalConnexion').modal('show');
+				console.log("erreur="+erreur);
+				console.log($("#erreur"));
+				console.log($('#erreur').attr('value'));
+				//$('#modalConnexion').modal('show');
+				alert("Evenement success");
 			},
 			error: function(reponse){
               	alert("Une ERREUR est survenue lors de la connexion");

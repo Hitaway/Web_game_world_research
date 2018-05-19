@@ -58,6 +58,16 @@ body
 	color: white;
 }
 
+#notification_connexion
+{
+	margin-bottom: 0px;
+}
+
+#notification_creer_compte
+{
+	margin-bottom: 0px;
+}
+
 /*-----------------------------------------
 		Entête avec le titre
 -----------------------------------------*/
@@ -200,6 +210,11 @@ body
 	border-color: black;
 	margin-top: 30px;
 	margin-bottom: 30px;
+}
+
+#notification_questionnaire
+{
+	margin-bottom: 0px;
 }
 
 /*-----------------------------------------

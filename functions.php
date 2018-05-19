@@ -105,8 +105,7 @@
 						echo '<td>'.$res['nom_questionnaire'].'</td>';
 					else
 						echo '<td></td>';
-					echo'<td>'.$res['intitule'].'</td><td>'.$res['latitude'].'</td>
-					<td>'.$res['longitude'].'</td>';
+					echo'<td>'.$res['intitule'].'</td><td>'.$res['latitude'].'</td><td>'.$res['longitude'].'</td>';
 					if($num_question == 1)
 						echo '<td><a href="gerer_questionnaire.php?delete='.urlencode($res['nom_questionnaire']).'"><span class="glyphicon glyphicon-trash"></span></a></td>';
 					echo '</tr>';
@@ -115,6 +114,7 @@
 					else
 						$num_question ++;
 				}while($res = $req->fetch(PDO::FETCH_ASSOC));
+				echo '</table>';
 			}
 			else
 				echo '<p style="text-align: center;">Aucun joueur dans la base de données </p>';
@@ -123,8 +123,7 @@
 		{
 		  	// On termine le script en affichant le n de l'erreur ainsi que le message 
 		   	die('<p> Erreur : ' . $e->getMessage() . '</p>');
-		}	
-		echo '</table>';
+		}
 	}
 
 	function afficheHistorique($bd, $pseudo)
@@ -163,7 +162,6 @@
 		  	// On termine le script en affichant le n de l'erreur ainsi que le message 
 	    	die('<p> Erreur : ' . $e->getMessage() . '</p>');
 		}	
-		echo '</table>';
 	}
 
 	//Test si les valeurs du premier tableau ($cle) sont des clés du deuxième
@@ -305,4 +303,44 @@
  		$alphabet = "0123456789azertyuiopqsdfghjklmwxcvbnAZERTYUIOPQSDFGHJKLMWXCVBN";
  		return substr(str_shuffle(str_repeat($alphabet, 60)), 0, 60);
  	}
+
+ 	function ajouterScore($bd, $score, $nom_questionnaire)
+	{
+		try
+        {
+        	//Insérer la partie courante dans l'historique
+            $req = $bd->prepare('INSERT INTO HISTORIQUE (id, pseudo, nom_questionnaire, date_partie, score) VALUES (:id, :pseudo, :nom_questionnaire, :date_partie, :score)');
+            $req->bindValue(':id',NULL);
+            $req->bindValue(':pseudo',htmlspecialchars($_SESSION['pseudo']));
+            $req->bindValue(':nom_questionnaire',htmlspecialchars($nom_questionnaire));
+            $req->bindValue(':date_partie',date("Y-m-d"));
+            $req->bindValue(':score',htmlspecialchars($score));
+            $req->execute();
+            $req->CloseCursor();
+
+            //Récupérer le score min dans la classement pour tester si le joueur a éfectuer un record
+            $req = $bd->prepare('SELECT * FROM CLASSEMENT WHERE score = (SELECT MIN(score) FROM CLASSEMENT) LIMIT 1');
+            $req->execute();
+            $res = $req->fetch(PDO::FETCH_ASSOC);
+            //Si score du joueur courant est supérieur au score min de la table classement
+            if($res['score'] < $score){
+            	//On supprime le joueur qui a le plus petit score de la table classement
+            	$req_delete = $bd->prepare('DELETE FROM CLASSEMENT WHERE id = :id');
+            	$req_delete->bindValue(':id', $res['id']);
+            	$req_delete->execute();
+
+            	//On ajoute le joueur courant
+            	$req_insert = $bd->prepare('INSERT INTO CLASSEMENT (id, score, pseudo) VALUES (:id, :score, :pseudo)');
+            	$req_insert->bindValue(':id',NULL);
+            	$req_insert->bindValue(':pseudo',htmlspecialchars($_SESSION['pseudo']));
+            	$req_insert->bindValue(':score',htmlspecialchars($score));
+            	$req_insert->execute();
+            }
+            $req->CloseCursor();
+        }
+        catch(PDOException $e)
+        {
+           	die('<p>Erreur[' .$e->getCode().'] : ' .$e->getMessage() . '</p>');
+        }
+	}
 ?>

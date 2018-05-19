@@ -5,17 +5,23 @@
 <?php
   $erreur_connexion = array();
 
- /*echo '<form method="post"><input type="hidden" name="erreur" id="erreur" placeholder="" /></form>';
+
+
+
+
+  echo '<form method="post"><input type="hidden" name="erreur" id="erreur" placeholder="" /></form>';
   $_POST['erreur']="true";
-  $erreur ="cuocu";
   echo $_POST['erreur'];
-  $_GET['erreur']="false";*/
+
+
+
+
 
   if (isset($_POST['pseudo1']) && isset($_POST['mdp1'])){ //On verifie que les variable existe
       if (empty($_POST['pseudo1']) || empty($_POST['mdp1']) || !(trim($_POST['pseudo1'])) || !(trim($_POST['mdp1']))) //Oublie d'un champ
       {
         $erreur_connexion['saisie'] = "Veillez saisir tout les champs";
-        /*$_POST['erreur']="true";*/
+        $_POST['erreur']="true";
       }
       else 
       {
@@ -28,20 +34,21 @@
         {
           $_SESSION['pseudo'] = $data['pseudo'];
           $_SESSION['droit'] = $data['droit'];
-          echo '<div class="alert alert-success alert-dismissible" role="alert">
+          echo '<div class="alert alert-success alert-dismissible notification" role="alert" id="notification_connexion">
                   <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                   Bienvenue <strong>'.$_SESSION['pseudo'].'</strong> ! Vous êtes maintenant connecté.
                 </div>';
+          $_POST['erreur']="false";
         }
         else //si MDP incorrect
         {
           $erreur_connexion['identifiant'] = "Identifiant ou pseudo incorrect";
-          /*$_POST['erreur']="true";*/
+          $_POST['erreur']="true";
         }
         $query->CloseCursor();
       }
   }
-  /*echo $_POST['erreur'];*/
+  echo $_POST['erreur'];
 
   $param = array('nom','prenom','email','pseudo2','mdp2','mdp3');
   $erreur_inscription = array();
@@ -71,7 +78,7 @@
           {
             die('<p>Erreur[' .$e->getCode().'] : ' .$e->getMessage() . '</p>');
           }
-          echo '<div class="alert alert-success alert-dismissible" role="alert">
+          echo '<div class="alert alert-success alert-dismissible notification" role="alert" id="notification_creer_compte">
                   <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                   Merci pour votre inscription ! Votre compte a bien été créé. 
                 </div>';
