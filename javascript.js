@@ -46,7 +46,7 @@ $(document).ready(function()
 		});
 	}, 4000);
 
-	$('form').submit(function(e){
+	/*$('form').submit(function(e){
 		$.ajax({
 			type:'POST',
 			url:'header.php',
@@ -63,17 +63,17 @@ $(document).ready(function()
             }
 		});
 		alert("Evenement clique bouton connexion");
-	});
+	});*/
 
 	/* Permet de fermer une modale avec le bouton Annuler
 	*/
 	$('.btn_annuler').click(function()
 	{
-		if($('#modalConnexion').is(":visible")){
+		if($('#modalConnexion').is(":visible"))
 			$('#modalConnexion').modal('hide');
-		}
-		if($('#modalInscrire').is(":visible")){
+		if($('#modalInscrire').is(":visible"))
 			$('#modalInscrire').modal('hide');
-		}
+		if($('#modalChoixQuestionnaire').is(":visible"))
+			$('#modalChoixQuestionnaire').modal('hide');
 	});
 });//fin du fichier JS

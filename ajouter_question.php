@@ -14,10 +14,10 @@
               </div>';
 	?>
 	<?php require("header.php"); ?>
-	<form class="form-horizontal container" method="post" id="formulaire">
+	<form class="form-horizontal container" method="post" id="formulaire" action="ajouter_question.php" enctype="multipart/form-data">
        	<div class="row form-group">
         	<div class="col-xs-2 col-sm-2 col-md-2 col-lg-2"></div>
-           	<label for="nom_questionnaire" class="col-xs-4 col-sm-4 col-md-4 col-lg-4 control-label" id="nom_questionnaire_titre">Nom du questionnaire</label>
+           	<label for="nom_questionnaire" class="col-xs-8 col-sm-8 col-md-8 col-lg-8 control-label" id="nom_questionnaire_titre">Nom du questionnaire</label>
         </div>
         <div class="row form-group">
            	<div class="col-xs-2 col-sm-2 col-md-2 col-lg-2"></div>
@@ -25,6 +25,7 @@
            		<input type="text" class="form-control" name="nom_questionnaire" placeholder="Entrez le nom du questionnaire..." />
            	</div>
         </div>
+        <input type="hidden" name="MAX_FILE_SIZE" value="16777216" /> <!-- taille max total de tout les fichiers à upload 16Mo -->
 
     	<?php
     		//Générer le code html pour afficher le formulaire des 7 questions
@@ -63,7 +64,11 @@
 					<div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
 						<textarea id="information3_q'.$i.'" name="information3_q'.$i.'" class="form-control"  rows="2" style="width: 100%;"></textarea>
 		       		</div>
-       			</div>';
+       			</div>
+				<div class="row form-group">
+       					<label for="photo'.$i.'" class="col-xs-6 col-sm-6 col-md-6 col-lg-6 control-label">Photo au format (JPG, PNG ou GIF | max. 2 Mo) </label>
+        				<input type="file" class="col-xs-6 col-sm-6 col-md-6 col-lg-6" name="photo'.$i.'" id="photo'.$i.'"/>
+        		</div>';
 			}
 
 			$error_ajout_question = array();
@@ -99,7 +104,17 @@
 					        $req->bindValue(':info2',htmlspecialchars($_POST['information2_q'.$i]));
 					        $req->bindValue(':info3',htmlspecialchars($_POST['information3_q'.$i]));
 					        $req->execute();
-					        $req->CloseCursor(); 
+					        $req->CloseCursor();
+
+					        mkdir('Image/'.$_POST['nom_questionnaire'].'/', 0777, true);
+					        move_uploaded_file($_FILES['photo1']['tmp_name'],'Image/'.$_POST['nom_questionnaire'].'/img_q1');
+					        move_uploaded_file($_FILES['photo2']['tmp_name'],'Image/'.$_POST['nom_questionnaire'].'/img_q2');
+					        move_uploaded_file($_FILES['photo3']['tmp_name'],'Image/'.$_POST['nom_questionnaire'].'/img_q3');
+					        move_uploaded_file($_FILES['photo4']['tmp_name'],'Image/'.$_POST['nom_questionnaire'].'/img_q4');
+					        move_uploaded_file($_FILES['photo5']['tmp_name'],'Image/'.$_POST['nom_questionnaire'].'/img_q5');
+					        move_uploaded_file($_FILES['photo6']['tmp_name'],'Image/'.$_POST['nom_questionnaire'].'/img_q6');
+					        move_uploaded_file($_FILES['photo7']['tmp_name'],'Image/'.$_POST['nom_questionnaire'].'/img_q7');
+					        
 					        //suprimer variable POST après insertion
 					        unset($_POST['question'.$i], $_POST['latitude'.$i], $_POST['longitude'.$i]);
 					    }

@@ -41,20 +41,30 @@
 							{
 						 		do
 								{
-									if(isset($_SESSION['pseudo']) && trim($_SESSION['pseudo'])!="" && $res['nom_questionnaire']!="7 merveille du monde"){
-										echo '<button><a>'.$res['nom_questionnaire'].'</a></button>';
+									if(isset($_SESSION['pseudo']) && trim($_SESSION['pseudo'])!="" || $res['nom_questionnaire']=="7 merveille du monde")
+									{
+										echo '<a href="Projet_slimane/carte.php?nom_questionnaire='.urlencode($res['nom_questionnaire']).'">
+													<button class="btn btn-primary btn_questionnaire">'.$res['nom_questionnaire'].'</button>
+												</a>';
+									}
+									else
+									{
+										echo '<a>
+												<button class="btn btn-secondary btn_questionnaire_lock btn_questionnaire">
+													<span class="glyphicon glyphicon glyphicon-lock" disabled></span> '
+													.$res['nom_questionnaire'].'</button>
+												</a>';
 									}
 								}while($res = $req->fetch(PDO::FETCH_ASSOC));
 							}
 							else
 								echo '<p style="text-align: center;">Aucun questionnaires dans la base de données </p>';
-							}
-							catch(PDOException $e)
-							{
-							  	// On termine le script en affichant le n de l'erreur ainsi que le message 
-							   	die('<p> Erreur : ' . $e->getMessage() . '</p>');
-							}
-					    }
+						}
+						catch(PDOException $e)
+						{
+						  	// On termine le script en affichant le n de l'erreur ainsi que le message 
+						   	die('<p> Erreur : ' . $e->getMessage() . '</p>');
+						}
 					?>
 	            </div>
 	            <div class="modal-footer">

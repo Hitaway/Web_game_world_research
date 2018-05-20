@@ -120,6 +120,19 @@ body
 	color: red;
 }
 
+.btn_questionnaire
+{
+	width: 50%;
+	margin: 15px;
+	margin-left: 25%;
+}
+
+.btn_questionnaire_lock
+{
+	color: black;
+	border-color:
+}
+
 /*-----------------------------------------
 		Texte descriptif du jeu
 -----------------------------------------*/
