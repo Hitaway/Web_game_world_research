@@ -5,17 +5,6 @@
 	require("functions.php");
 ?>
 	<body>
-	<?php 
-		if($_GET['success_ajout']=='true'){
-			echo '<div class="alert alert-success alert-dismissible" role="alert" id="notification_questionnaire">
-	                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-	                	<span aria-hidden="true">&times;</span>
-	                </button>
-	                  	Le questionnaires <strong>'.$_POST['nom_questionnaire'].'</strong> à bien été créer.
-	              </div>';
-	        isset($_GET['success_ajout']);
-		}
-	?>
 	<?php require("header.php"); ?>
 	<form class="form-horizontal container" method="post" id="formulaire" action="ajouter_question.php" enctype="multipart/form-data">
        	<div class="row form-group">
@@ -37,35 +26,34 @@
 		        <div class="row form-group">     	
 		           	<label for="question'.$i.'" class="col-xs-2 col-sm-2 col-md-2 col-lg-2 control-label">Question '.$i.'</label>
 		           	<div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
-		           		<input type="text" class="form-control" name="question'.$i.'" placeholder="Entrez la question..." />
-		            </div>
+		           		<input type="text" class="form-control" name="question'.$i.'" placeholder="Entrez la question..."  required /> </div>
 		        </div>
 		        <div class="row form-group">
 		        	<label for="Latitude'.$i.'" class="col-xs-2 col-sm-2 col-md-2 col-lg-2 control-label">Latitude</label>
 		            <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
-		                <input type="text" class="form-control" name="latitude'.$i.'" placeholder="Entrez la Longitude..." />
+		                <input type="text" class="form-control" name="latitude'.$i.'" placeholder="Entrez la Longitude..." required/>
 		            </div>
 		            <label for="longitude'.$i.'" class="col-xs-2 col-sm-2 col-md-2 col-lg-2 control-label">Longitude</label>
 		            <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
-		                <input type="text" class="form-control" name="longitude'.$i.'" placeholder="Entrez la Latitude..." />
+		                <input type="text" class="form-control" name="longitude'.$i.'" placeholder="Entrez la Latitude..." required/>
 		            </div>
 				</div>
 				<div class="row form-group">
 					<label for="information1_q'.$i.'" class="col-xs-2 col-sm-2 col-md-2 col-lg-2 control-label">Information 1</label>
 					<div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
-						<textarea id="information1_q'.$i.'" name="information1_q'.$i.'" class="form-control"  rows="2" style="width: 100%;"></textarea>
+						<textarea id="information1_q'.$i.'" name="information1_q'.$i.'" class="form-control" placeholder="Entrez des informations sur la question..." required rows="2" style="width: 100%;"></textarea>
 		       		</div>
        			</div>
        			<div class="row form-group">
 					<label for="information2_q'.$i.'" class="col-xs-2 col-sm-2 col-md-2 col-lg-2 control-label">Information 2</label>
 					<div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
-						<textarea id="information2_q'.$i.'" name="information2_q'.$i.'" class="form-control"  rows="2" style="width: 100%;"></textarea>
+						<textarea id="information2_q'.$i.'" name="information2_q'.$i.'" class="form-control" placeholder="Entrez des informations sur la question..." required rows="2" style="width: 100%;"></textarea>
 		       		</div>
        			</div>
        			<div class="row form-group">
 					<label for="information3_q'.$i.'" class="col-xs-2 col-sm-2 col-md-2 col-lg-2 control-label">Information 3</label>
 					<div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
-						<textarea id="information3_q'.$i.'" name="information3_q'.$i.'" class="form-control"  rows="2" style="width: 100%;"></textarea>
+						<textarea id="information3_q'.$i.'" name="information3_q'.$i.'" class="form-control" placeholder="Entrez des informations sur la question..." required rows="2" style="width: 100%;"></textarea>
 		       		</div>
        			</div>
 				<div class="row form-group">
@@ -94,7 +82,7 @@
 			        $req->CloseCursor();
 				    try
 				    {
-				        $sql = 'INSERT INTO QUESTIONS (intitule, nom_questionnaire, latitude, longitude, information1, information2, information3) VALUES (:intitule, :nom_questionnaire, :latitude, :longitude, :info1, :info2, :info3)';
+				        $sql = 'INSERT INTO QUESTIONS (intitule, nom_questionnaire, latitude, longitude, information1, information2, information3, url) VALUES (:intitule, :nom_questionnaire, :latitude, :longitude, :info1, :info2, :info3, :url)';
 				        //Ajouter les 7 questions
 				        for ($i = 1; $i <= 7; $i++)
 				        {
@@ -106,6 +94,7 @@
 					        $req->bindValue(':info1',htmlspecialchars($_POST['information1_q'.$i]));
 					        $req->bindValue(':info2',htmlspecialchars($_POST['information2_q'.$i]));
 					        $req->bindValue(':info3',htmlspecialchars($_POST['information3_q'.$i]));
+					       	$req->bindValue(':url',htmlspecialchars('Image/'.$_POST['nom_questionnaire'].'/img_q'.$i));
 					        $req->execute();
 					        $req->CloseCursor();
 
@@ -120,10 +109,20 @@
 
 					        //suprimer variable POST après insertion
 					        unset($_POST['question'.$i], $_POST['latitude'.$i], $_POST['longitude'.$i]);
-					        //On remet a jour la page avec la notification que le questionnaire a été ajouté
-					        header('Location: ajouter_question.php?success_ajout=true');
-					        $_GET['success_ajout']="true";
 					    }
+					    echo '<div class="row form-group">';
+                		echo '<div class="col-xs-2 col-sm-2 col-md-2 col-lg-2"></div>';
+                		echo '<div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">';
+					    echo '<div class="alert alert-success alert-dismissible" role="alert" id="notification_questionnaire">
+				                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+				                	<span aria-hidden="true">&times;</span>
+				                </button>
+				                  	Le questionnaires <strong>'.$_POST['nom_questionnaire'].'</strong> à bien été créer.
+				              </div>';
+				        echo '</div>';
+                		echo '</div>';
+                		echo '</div>';
+
                 		//suprimer variable POST après insertion
 				    	unset($_POST['nom_questionnaire']);
 				    }

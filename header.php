@@ -5,14 +5,10 @@
 <?php
   $erreur_connexion = array();
 
-  echo 'TEST 1='.$_POST['erreurConnexion'];
-
   if (isset($_POST['pseudo1']) && isset($_POST['mdp1'])){ //On verifie que les variable existe
       if (empty($_POST['pseudo1']) || empty($_POST['mdp1']) || !(trim($_POST['pseudo1'])) || !(trim($_POST['mdp1']))) //Oublie d'un champ
       {
         $erreur_connexion['saisie'] = "Veillez saisir tout les champs";
-
-        $_POST['erreurConnexion']='false';
       }
       else 
       {
@@ -29,23 +25,13 @@
                   <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                   Bienvenue <strong>'.$_SESSION['pseudo'].'</strong> ! Vous êtes maintenant connecté.
                 </div>';
-
-          $_POST['erreurConnexion']='true';
-
-            echo 'TEST 2='.$_POST['erreurConnexion'];
         }
         else //si MDP incorrect
         {
           $erreur_connexion['identifiant'] = "Identifiant ou pseudo incorrect";
-
-          $_POST['erreurConnexion']='false';
         }
         $query->CloseCursor();
       }
-        echo 'TEST 3='.$_POST['erreurConnexion'];
-        
-        $arr = array('erreurConnexion' => $_POST['erreurConnexion']);
-        echo json_encode($arr);
   }
 
   $param = array('nom','prenom','email','pseudo2','mdp2','mdp3');
@@ -138,19 +124,17 @@
                   <h4 class="modal-title">Identification</h4>
                 </div>
             <form class="form-horizontal" method="post">
-              <!-- stocker valeur, si true aucune erreur si false erreur -->
-              <input id="erreurConnexion" name="erreurConnexion" type="hidden" value="true">
               <div class="modal-body">
                 <div class="form-group">
                   <label for="pseudo1" class="col-sm-3 control-label">Pseudo</label>
                   <div class="col-sm-9">
-                    <input type="text" class="form-control" name="pseudo1" id="pseudo1" value="Hitaway" placeholder="Entrez votre pseudo..." />
+                    <input type="text" class="form-control" name="pseudo1" id="pseudo1" placeholder="Entrez votre pseudo..." required/>
                   </div>
                 </div>
                 <div class="form-group">
                   <label for="mdp1" class="col-sm-3 control-label">Mot de passe</label>
                     <div class="col-sm-9">
-                      <input type="password" class="form-control" name="mdp1" id="mdp1" value="azerty" placeholder="Entrez votre mot de passe..." />
+                      <input type="password" class="form-control" name="mdp1" id="mdp1" placeholder="Entrez votre mot de passe..." required/>
                     </div>
                 </div>          
                   <?php
@@ -192,37 +176,37 @@
               <div class="form-group">
                 <label for="nom" class="col-sm-3 control-label">Nom</label>
                 <div class="col-sm-9">
-                  <input type="text" class="form-control" name="nom" id="nom" placeholder="Entrez votre nom..." />
+                  <input type="text" class="form-control" name="nom" id="nom" placeholder="Entrez votre nom..." required/>
                 </div>
                 </div>
               <div class="form-group">
                 <label for="prenom" class="col-sm-3 control-label">Prenom</label>
                 <div class="col-sm-9">
-                  <input type="text" class="form-control" name="prenom" id="prenom" placeholder="Entrez votre prenom..." />
+                  <input type="text" class="form-control" name="prenom" id="prenom" placeholder="Entrez votre prenom..." required/>
                 </div>
               </div>
               <div class="form-group">
                 <label for="pseudo2" class="col-sm-3 control-label">Pseudo</label>
                 <div class="col-sm-9">
-                  <input type="text" class="form-control" name="pseudo2" id="pseudo2" placeholder="Entrez votre Pseudo..." />
+                  <input type="text" class="form-control" name="pseudo2" id="pseudo2" placeholder="Entrez votre Pseudo..." required/>
                 </div>
               </div>
               <div class="form-group">
                 <label for="email" class="col-sm-3 control-label">Email</label>
                 <div class="col-sm-9">
-                  <input type="email" class="form-control" name="email" id="email" placeholder="Entrez votre adresse email..." />
+                  <input type="email" class="form-control" name="email" id="email" placeholder="Entrez votre adresse email..." required/>
                 </div>
               </div>
               <div class="form-group">
                 <label for="mdp2" class="col-sm-3 control-label">Mot de passe</label>
                 <div class="col-sm-9">
-                  <input type="password" class="form-control" name="mdp2" id="mdp2" placeholder="Entrez votre mot de passe..." />
+                  <input type="password" class="form-control" name="mdp2" id="mdp2" placeholder="Entrez votre mot de passe..." required/>
                 </div>
               </div>
               <div class="form-group">
                 <label for="mdp3" class="col-sm-3 control-label">Confirmer mot de passe</label>
                 <div class="col-sm-9">
-                  <input type="password" class="form-control" name="mdp3" id="mdp3" placeholder="Veuillez confirmer votre mot de passe..." />
+                  <input type="password" class="form-control" name="mdp3" id="mdp3" placeholder="Veuillez confirmer votre mot de passe..." required/>
                 </div>
               </div>
               <div class="form-group"> 
