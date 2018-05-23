@@ -6,12 +6,15 @@
 ?>
 	<body>
 	<?php 
-		echo '<div class="alert alert-success alert-dismissible" role="alert" id="notification_questionnaire">
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                	<span aria-hidden="true">&times;</span>
-                </button>
-                  	Le questionnaires <strong>'.$_POST['nom_questionnaire'].'</strong> à bien été créer.
-              </div>';
+		if($_GET['success_ajout']=='true'){
+			echo '<div class="alert alert-success alert-dismissible" role="alert" id="notification_questionnaire">
+	                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+	                	<span aria-hidden="true">&times;</span>
+	                </button>
+	                  	Le questionnaires <strong>'.$_POST['nom_questionnaire'].'</strong> à bien été créer.
+	              </div>';
+	        isset($_GET['success_ajout']);
+		}
 	?>
 	<?php require("header.php"); ?>
 	<form class="form-horizontal container" method="post" id="formulaire" action="ajouter_question.php" enctype="multipart/form-data">
@@ -114,9 +117,12 @@
 					        move_uploaded_file($_FILES['photo5']['tmp_name'],'Image/'.$_POST['nom_questionnaire'].'/img_q5');
 					        move_uploaded_file($_FILES['photo6']['tmp_name'],'Image/'.$_POST['nom_questionnaire'].'/img_q6');
 					        move_uploaded_file($_FILES['photo7']['tmp_name'],'Image/'.$_POST['nom_questionnaire'].'/img_q7');
-					        
+
 					        //suprimer variable POST après insertion
 					        unset($_POST['question'.$i], $_POST['latitude'.$i], $_POST['longitude'.$i]);
+					        //On remet a jour la page avec la notification que le questionnaire a été ajouté
+					        header('Location: ajouter_question.php?success_ajout=true');
+					        $_GET['success_ajout']="true";
 					    }
                 		//suprimer variable POST après insertion
 				    	unset($_POST['nom_questionnaire']);

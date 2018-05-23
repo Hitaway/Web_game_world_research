@@ -5,23 +5,14 @@
 <?php
   $erreur_connexion = array();
 
-
-
-
-
-  echo '<form method="post"><input type="hidden" name="erreur" id="erreur" placeholder="" /></form>';
-  $_POST['erreur']="true";
-  echo $_POST['erreur'];
-
-
-
-
+  echo 'TEST 1='.$_POST['erreurConnexion'];
 
   if (isset($_POST['pseudo1']) && isset($_POST['mdp1'])){ //On verifie que les variable existe
       if (empty($_POST['pseudo1']) || empty($_POST['mdp1']) || !(trim($_POST['pseudo1'])) || !(trim($_POST['mdp1']))) //Oublie d'un champ
       {
         $erreur_connexion['saisie'] = "Veillez saisir tout les champs";
-        $_POST['erreur']="true";
+
+        $_POST['erreurConnexion']='false';
       }
       else 
       {
@@ -38,17 +29,24 @@
                   <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                   Bienvenue <strong>'.$_SESSION['pseudo'].'</strong> ! Vous êtes maintenant connecté.
                 </div>';
-          $_POST['erreur']="false";
+
+          $_POST['erreurConnexion']='true';
+
+            echo 'TEST 2='.$_POST['erreurConnexion'];
         }
         else //si MDP incorrect
         {
           $erreur_connexion['identifiant'] = "Identifiant ou pseudo incorrect";
-          $_POST['erreur']="true";
+
+          $_POST['erreurConnexion']='false';
         }
         $query->CloseCursor();
       }
+        echo 'TEST 3='.$_POST['erreurConnexion'];
+        
+        $arr = array('erreurConnexion' => $_POST['erreurConnexion']);
+        echo json_encode($arr);
   }
-  echo $_POST['erreur'];
 
   $param = array('nom','prenom','email','pseudo2','mdp2','mdp3');
   $erreur_inscription = array();
@@ -140,6 +138,8 @@
                   <h4 class="modal-title">Identification</h4>
                 </div>
             <form class="form-horizontal" method="post">
+              <!-- stocker valeur, si true aucune erreur si false erreur -->
+              <input id="erreurConnexion" name="erreurConnexion" type="hidden" value="true">
               <div class="modal-body">
                 <div class="form-group">
                   <label for="pseudo1" class="col-sm-3 control-label">Pseudo</label>
@@ -158,7 +158,7 @@
                       echo '<div class="form-group">';
                       echo '<div class="col-sm-3"></div>';
                       echo '<div class="col-sm-9">';
-                      echo '<div class="alert alert-danger ">';
+                      echo '<div class="alert alert-danger">';
                         foreach ($erreur_connexion as $error)
                           echo $error;
                       echo '</div>';
@@ -172,7 +172,7 @@
                   <div class="col-sm-3"></div>
                   <div class="col-sm-9">
                     <button type="submit" class="btn btn-primary btn_valider" id="btn_connexion">Connexion</button>
-                    <button type="button" class="btn btn-danger btn_annuler">Annuler</button>
+                    <button type="button" class="btn btn-danger btn_annuler">Fermer</button>
                   </div>
                 </div>
               </div>
@@ -247,7 +247,7 @@
                 <div class="col-sm-3"></div>
                 <div class="col-sm-9">
                   <button type="submit" class="btn btn-primary btn_valider">S'inscrire</button>
-                  <button type="button" class="btn btn-danger btn_annuler">Annuler</button>     
+                  <button type="button" class="btn btn-danger btn_annuler">Fermer</button>     
                 </div>
               </div>
             </div>        

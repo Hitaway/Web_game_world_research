@@ -68,7 +68,7 @@
 					?>
 	            </div>
 	            <div class="modal-footer">
-	            	<button type="button" class="btn btn-danger btn_annuler">Annuler</button>
+	            	<button type="button" class="btn btn-danger btn_annuler">Fermer</button>
 	            </div>
 	        </div>
 	    </div>

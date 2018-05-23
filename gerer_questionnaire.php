@@ -22,6 +22,17 @@
 				            $req->bindValue(':nom_questionnaires',htmlspecialchars($_GET['delete']));
 				            $req->execute();
 				            $req->CloseCursor();
+
+				            //Supprimer le dossier qui contient les images du questionnaire
+				            $dossier = 'Image/'.$_GET['delete'];
+							$dir_iterator = new RecursiveDirectoryIterator($dossier);
+							$iterator = new RecursiveIteratorIterator($dir_iterator, RecursiveIteratorIterator::CHILD_FIRST);
+							// On supprime chaque dossier et chaque fichier	du dossier cible
+							foreach($iterator as $fichier){
+								$fichier->isDir() ? rmdir($fichier) : unlink($fichier);
+							}
+							// On supprime le dossier cible
+							rmdir($dossier);
 			          	}
 			         	catch(PDOException $e)
 			          	{
