@@ -196,6 +196,33 @@ body
 }
 
 /*-----------------------------------------
+				Règle
+-----------------------------------------*/
+
+.bloc
+{
+	margin-top: 50px; 
+	width: 100%; 
+	height: 200px; 
+	background-color: #eceeef;
+}
+
+.bloc_img
+{
+	background-color: white; 
+	padding: 10px;
+	height: 160px; 
+	width: 160px; 
+	margin: 20px;
+}
+
+.bloc_taille_img
+{
+	width: 100%;
+	height: 100%;
+}
+
+/*-----------------------------------------
 			Ajouter question
 -----------------------------------------*/
 
