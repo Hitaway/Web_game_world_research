@@ -43,7 +43,7 @@
 								{
 									if(isset($_SESSION['pseudo']) && trim($_SESSION['pseudo'])!="" || $res['nom_questionnaire']=="7 merveille du monde")
 									{
-										echo '<a href="Projet_slimane/carte.php?nom_questionnaire='.urlencode($res['nom_questionnaire']).'">
+										echo '<a href="carte.php?nom_questionnaire='.urlencode($res['nom_questionnaire']).'">
 													<button class="btn btn-primary btn_questionnaire">'.$res['nom_questionnaire'].'</button>
 												</a>';
 									}
