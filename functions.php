@@ -268,26 +268,6 @@
 	    return true;
  	}
 
- 	function upload($index,$destination,$maxsize,$extensions, &$error)
-	{
-		$error = array();
-	   //Test1: fichier correctement uploadé
-	    if (!isset($_FILES[$index]) OR ($_FILES[$index]['error'] > 0)) 
-	     	$error['upload'] = "erreur opload";
-
-	   //Test2: taille limite
-	    if ($maxsize !== FALSE AND $_FILES[$index]['size'] > $maxsize) 
-	    	$error['taille'] = "taille de fichier supérieur à la taille indiqué";
-
-	   //Test3: extension
-	    $ext = substr(strrchr($_FILES[$index]['name'],'.'),1);
-	    if ($extensions !== FALSE AND !in_array($ext,$extensions)) 
-	     	$error['extension'] = "extension du fichier non pris en charge";
-
-	    return $error;
-
-	}
-
  	function formulaire_ajouter_question_valide($bd,$cle,$tableau)
  	{
  		$error = array();
@@ -312,14 +292,6 @@
 
 			if(VerifQuestionnaireDejaExistant($bd, $tableau) == false)
 				$error['questionnaire_existant'] = "Le questionnaire que vous voulez ajoutez éxiste déja";
-
-			upload('photo1','Image/'.$tableau['nom_questionnaire'].'/img_q1',2097152, array( 'jpg' , 'jpeg' , 'gif' , 'png' ), $error);
-			upload('photo2','Image/'.$tableau['nom_questionnaire'].'/img_q2',2097152, array( 'jpg' , 'jpeg' , 'gif' , 'png' ), $error);
-			upload('photo3','Image/'.$tableau['nom_questionnaire'].'/img_q3',2097152, array( 'jpg' , 'jpeg' , 'gif' , 'png' ), $error);
-			upload('photo4','Image/'.$tableau['nom_questionnaire'].'/img_q4',2097152, array( 'jpg' , 'jpeg' , 'gif' , 'png' ), $error);
-			upload('photo5','Image/'.$tableau['nom_questionnaire'].'/img_q5',2097152, array( 'jpg' , 'jpeg' , 'gif' , 'png' ), $error);
-			upload('photo6','Image/'.$tableau['nom_questionnaire'].'/img_q6',2097152, array( 'jpg' , 'jpeg' , 'gif' , 'png' ), $error);
-			upload('photo7','Image/'.$tableau['nom_questionnaire'].'/img_q7',2097152, array( 'jpg' , 'jpeg' , 'gif' , 'png' ), $error);
 		}
 
 		return $error;
@@ -332,14 +304,14 @@
  		return substr(str_shuffle(str_repeat($alphabet, 60)), 0, 60);
  	}
 
- 	function ajouterScore($bd, $score, $nom_questionnaire, $pseudo)
+ 	function ajouterScore($bd, $score, $nom_questionnaire)
 	{
 		try
         {
         	//Insérer la partie courante dans l'historique
             $req = $bd->prepare('INSERT INTO HISTORIQUE (id, pseudo, nom_questionnaire, date_partie, score) VALUES (:id, :pseudo, :nom_questionnaire, :date_partie, :score)');
             $req->bindValue(':id',NULL);
-            $req->bindValue(':pseudo',htmlspecialchars($pseudo));
+            $req->bindValue(':pseudo',htmlspecialchars($_SESSION['pseudo']));
             $req->bindValue(':nom_questionnaire',htmlspecialchars($nom_questionnaire));
             $req->bindValue(':date_partie',date("Y-m-d"));
             $req->bindValue(':score',htmlspecialchars($score));
@@ -360,7 +332,7 @@
             	//On ajoute le joueur courant
             	$req_insert = $bd->prepare('INSERT INTO CLASSEMENT (id, score, pseudo) VALUES (:id, :score, :pseudo)');
             	$req_insert->bindValue(':id',NULL);
-            	$req_insert->bindValue(':pseudo',htmlspecialchars($pseudo));
+            	$req_insert->bindValue(':pseudo',htmlspecialchars($_SESSION['pseudo']));
             	$req_insert->bindValue(':score',htmlspecialchars($score));
             	$req_insert->execute();
             }
