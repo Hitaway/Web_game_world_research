@@ -32,14 +32,14 @@ $(document).ready(function(){
 		success : function(reponse){
 			var question =(reponse[0].intitule);
 
-			$("#image_principale_kheops").attr("src","./Image/"+reponse[0].nom_questionnaire+"/img_q1");
+			$("#image_principale_kheops").attr("src",reponse[0].url);
 			$("#question").text(question);
 			$("#paragraphe1").text(reponse[0].information1);
-		    $("#image_slide1").attr('src',"./Image/"+reponse[0].nom_questionnaire+"/img_q1");
+		    $("#image_slide1").attr('src',reponse[0].url);
 		    $("#paragraphe2").text(reponse[0].information2)
-			$("#image_slide2").attr('src',"./Image/"+reponse[0].nom_questionnaire+"/img_q1");
+			$("#image_slide2").attr('src',reponse[0].url);
 			$("#paragraphe3").text(reponse[0].information3)
-			$("#image_slide3").attr("src","./Image/"+reponse[0].nom_questionnaire+"/img_q1");
+			$("#image_slide3").attr("src",reponse[0].url);
 
 								
 
@@ -379,18 +379,18 @@ $(document).ready(function(){
 			$("#score").attr("value",score);
 			//$("#image_merveille").attr("src","./Image/tour_pharos.jpg");
 
-			$("#image_principale_kheops").attr("src","./Image/"+reponse[1].nom_questionnaire+"/img_q2");
+			$("#image_principale_kheops").attr("src",reponse[1].url);
 
 			tmp="2";
 			$('#cache').attr("value","faux");
 
 			
 		    $("#paragraphe2").text(reponse[1].information1);
-			$("#image_slide2").attr('src',"./Image/"+reponse[1].nom_questionnaire+"/img_q2");
+			$("#image_slide2").attr('src',reponse[1].url);
 			$("#paragraphe3").text(reponse[1].information2)
 			$("#paragraphe1").text(reponse[1].information3);
-		    $("#image_slide1").attr('src',"./Image/"+reponse[1].nom_questionnaire+"/img_q2");
-			$("#image_slide3").attr("src","./Image/"+reponse[1].nom_questionnaire+"/img_q2");
+		    $("#image_slide1").attr('src',reponse[1].url);
+			$("#image_slide3").attr("src",reponse[1].url);
 
 
 		}
@@ -412,13 +412,13 @@ $(document).ready(function(){
 			//$("#image_merveille").attr("src","./Image/jardins_babylone.jpg");
 			tmp="3";
 			$('#cache').attr("value","faux");
-			$("#image_principale_kheops").attr("src","./Image/"+reponse[2].nom_questionnaire+"/img_q3");
+			$("#image_principale_kheops").attr("src",reponse[2].url);
 			$("#paragraphe1").text(reponse[2].information1);
-		    $("#image_slide1").attr('src',"./Image/"+reponse[2].nom_questionnaire+"/img_q3");
+		    $("#image_slide1").attr('src',reponse[2].url);
 		    $("#paragraphe2").text(reponse[2].information2)
-			$("#image_slide2").attr('src',"./Image/"+reponse[2].nom_questionnaire+"/img_q3");
+			$("#image_slide2").attr('src',reponse[2].url);
 			$("#paragraphe3").text(reponse[2].information3)
-			$("#image_slide3").attr("src","./Image/"+reponse[2].nom_questionnaire+"/img_q3");			
+			$("#image_slide3").attr("src",reponse[2].url);			
 
 		}
 		else if(tmp=="3" && $('#cache').attr("value")=="vrai") {
@@ -434,13 +434,13 @@ $(document).ready(function(){
 			score_tmp=score;
 
 			
-			$("#image_principale_kheops").attr("src","./Image/"+reponse[3].nom_questionnaire+"/img_q4");
+			$("#image_principale_kheops").attr("src",reponse[3].url);
 			$("#paragraphe1").text(reponse[3].information1);
-		    $("#image_slide1").attr('src',"./Image/"+reponse[3].nom_questionnaire+"/img_q4");
+		    $("#image_slide1").attr('src',reponse[3].url);
 		    $("#paragraphe2").text(reponse[3].information2);
-			$("#image_slide2").attr('src',"./Image/"+reponse[3].nom_questionnaire+"/img_q4");
+			$("#image_slide2").attr('src',reponse[3].url);
 			$("#paragraphe3").text(reponse[3].information3)
-    		$("#image_slide3").attr("src","./Image/"+reponse[3].nom_questionnaire+"/img_q4");				
+    		$("#image_slide3").attr("src",reponse[3].url);				
 
 		}
 
@@ -455,13 +455,13 @@ $(document).ready(function(){
 			tmp="5";
 			$('#cache').attr("value","faux");
 			score_tmp=score;
-			$("#image_principale_kheops").attr("src","./Image/"+reponse[4].nom_questionnaire+"/img_q5");
+			$("#image_principale_kheops").attr("src",reponse[4].url);
 			$("#paragraphe1").text(reponse[4].information1);
-		    $("#image_slide1").attr('src',"./Image/"+reponse[4].nom_questionnaire+"/img_q5");
+		    $("#image_slide1").attr('src',reponse[4].url);
 		    $("#paragraphe2").text(reponse[4].information2)
-			$("#image_slide2").attr('src',"./Image/"+reponse[4].nom_questionnaire+"/img_q5");
+			$("#image_slide2").attr('src',reponse[4].url);
 			$("#paragraphe3").text(reponse[4].information3)
-    		$("#image_slide3").attr("src","./Image/"+reponse[4].nom_questionnaire+"/img_q5");			
+    		$("#image_slide3").attr("src",reponse[4].url);			
 
 		}
 
@@ -476,13 +476,13 @@ $(document).ready(function(){
 			tmp="6";
 			$('#cache').attr("value","faux");		
 			score_tmp=score;
-			$("#image_principale_kheops").attr("src","./Image/"+reponse[5].nom_questionnaire+"/img_q6");
+			$("#image_principale_kheops").attr("src",reponse[5].url);
 			$("#paragraphe1").text(reponse[5].information1);
-		    $("#image_slide1").attr('src',"./Image/"+reponse[5].nom_questionnaire+"/img_q6");
+		    $("#image_slide1").attr('src',reponse[5].url);
 		    $("#paragraphe2").text(reponse[5].information2);			
-		    $("#image_slide2").attr('src',"./Image/"+reponse[5].nom_questionnaire+"/img_q6");
+		    $("#image_slide2").attr('src',reponse[5].url);
 			$("#paragraphe3").text(reponse[5].information3)
-    		$("#image_slide3").attr("src","./Image/"+reponse[5].nom_questionnaire+"/img_q6");	
+    		$("#image_slide3").attr("src",reponse[5].url);	
 
 		}
 
@@ -498,13 +498,13 @@ $(document).ready(function(){
 			$("#image_merveille").attr("src","./Image/colosse_rhodes.jpg");
 			score_tmp=score;
 			tmp="7";
-			$("#image_principale_kheops").attr("src","./Image/"+reponse[6].nom_questionnaire+"/img_q7");
+			$("#image_principale_kheops").attr("src",reponse[6].url);
 			$("#paragraphe1").text(reponse[6].information1);
-		    $("#image_slide1").attr('src',"./Image/"+reponse[6].nom_questionnaire+"/img_q7");
+		    $("#image_slide1").attr('src',reponse[6].url);
 		    $("#paragraphe2").text(reponse[6].information2)			
-		    $("#image_slide2").attr('src',"./Image/"+reponse[6].nom_questionnaire+"/img_q7");
+		    $("#image_slide2").attr('src',reponse[6].url);
 			$("#paragraphe3").text(reponse[6].information3)
-    		$("#image_slide3").attr("src","./Image/"+reponse[6].nom_questionnaire+"/img_q7");
+    		$("#image_slide3").attr("src",reponse[6].url);
 
 		}
 		else if(tmp=="7" && $('#cache').attr("value")=="vrai"){
@@ -513,9 +513,7 @@ $(document).ready(function(){
 			tmp="8";
 			console.log(score);
 			$(".suivant").remove();
-			$('#test_btn').append('<input type="submit"class="btn btn-primary suivant" style="float:right; width:120px;font-size: 20px; margin-top: 140px;" value="Quitter"/>');
-
-
+			$('#quitter').append('<input type="submit" class="btn btn-primary suivant" value="Quitter"/>');
 		}
 		else{
 			console.log("VEUILLEZ LOCALISEZ LA CIBLE !");

@@ -1,10 +1,13 @@
-<?php require("identifiants.php"); ?>
+<?php 
+session_start();
+require("identifiants.php");
+$_SESSION['nom_questionnaire'] = $_GET['nom_questionnaire'];
+?>
 
 <!DOCTYPE html>
 	<head>
 	<meta charset="utf-8">
 	<title>Map</title>
-
 
 	<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
 	<link href='http://fonts.googleapis.com/css?family=Merienda+One' rel='stylesheet' type='text/css'>
@@ -29,29 +32,57 @@
 		<input type="hidden" id="score_cache" name="hiddenPhone" value="0" />
 		<input type="hidden" id="score_cache_bis" name="hiddenPhone" value="0" />
 		<h1 id="titre_questionnaire"></h1>
-		<div class="container">
+		<div class="container" style="width: auto;height: 250px;background-color:#DFF2FF;border-radius: 10px;margin-top: 10px;">
 
-				<div class="row">
+                <div class="row">
 
-					<div class="col-md-1">	
-							<p>Q<span id="numero" >1</span></p>		
-					</div>
+                    <div id="label_question"class="col-md-2">  
+                            <p>Q<span id="numero" >1</span></p>     
+                    </div>
 
-					<div class="col-md-9">
-							<button id="btn_infos" type="button" class="btn btn-primary btn-md" data-toggle="modal" data-target="#exampleModal" style=""><span class="glyphicon glyphicon-question-sign">Infos</button>
+                     <div class="col-md-2 offset-md-4">  
+                                 
+                    </div>
 
-							<img id="image_principale_kheops">
-							<p id="question"></p>	
-					</div>
-					
-					<div class="col-md-2">		
-							<form id="test_btn" method="post" action="ajouter_score.php"class="pull-right">
-								<p id="paragraphe_score">Score <input type="text" name="score" id="score" value="0" readonly="readonly"/></p>
-								<button type="button" class="btn btn-primary suivant">Suivant<span class="glyphicon glyphicon-menu-right"></span></button>
-							</form>
-					</div>
-				</div>	 
-			</div>	
+                     <div class="col-md-6"> 
+                            <button id="btn_infos" type="button" class="btn btn-primary btn-md" data-toggle="modal" data-target="#exampleModal" style=""><span class="glyphicon glyphicon-question-sign">Infos</button>          
+                    </div>
+
+                    <div class="col-md-2"> 
+
+                            <form id="test_btn" method="post" action="ajouter_score.php" class="pull-right">
+                                <p id="paragraphe_score">Score <input type="text" name="score" id="score" value="0" readonly="readonly"/></p>
+                                
+                                
+                    </div>
+                </div>
+                 <div class="row">
+
+
+                    <div class="col-md-1 offset-md-1">  
+                    </div>
+
+                    <div class="col-md-4">
+                         <img id="image_principale_kheops">
+                             
+
+                    </div>
+                    <div class="col-md-5">
+                            <p id="question"></p>
+                    </div>
+                    
+
+                    <div class="col-md-2" id="quitter">
+
+                            <button type="button" class="btn btn-primary suivant">Suivant<span class="glyphicon glyphicon-menu-right"></span></button>
+                            
+                    </div>              
+                           </form>  
+                
+                    </div>
+                </div>   
+                  
+            </div> 
 
 		<!-- Modal -->
 		<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">

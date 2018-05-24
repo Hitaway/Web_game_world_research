@@ -4,10 +4,8 @@
 	require("identifiants.php"); 	
 	require("functions.php");
 ?>
-
 <body>
 	<!--########################## En-tête #################-->
-
 	<div id="entête_img">
 		<?php require("header.php"); ?>
 

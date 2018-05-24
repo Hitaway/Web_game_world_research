@@ -2,20 +2,11 @@
 session_start();
 require ("identifiants.php");
 require("carte.php");
-
- 
-        try
+       /* try
         {
-           
-            //$pseudo=$_POST['pseudo'];
-            //$nom_questionnaire=$_GET['nom_questionnaire'];
             $score=$_POST['score'];
-            $nom_questionnaire="7 merveille du monde";
-            //$score=28;
-            $pseudo="Slimane93";
-            //$nom_questionnaire="7 merveille du monde";
-            //$score=28;
-            //Insérer la partie courante dans l'historique
+            $nom_questionnaire=$_SESSION['nom_questionnaire'];
+            $pseudo=$_SESSION['pseudo'];
             $req = $bd->prepare('INSERT INTO HISTORIQUE (id, pseudo, nom_questionnaire, date_partie, score) VALUES (:id, :pseudo, :nom_questionnaire, :date_partie, :score)');
             $req->bindValue(':id',NULL);
             $req->bindValue(':pseudo',htmlspecialchars($pseudo));
@@ -48,6 +39,6 @@ require("carte.php");
         catch(PDOException $e)
         {
             die('<p>Erreur[' .$e->getCode().'] : ' .$e->getMessage() . '</p>');
-        }
-        //header('Location: accueil.php');
+        }*/
+        header('Location: accueil.php');
 ?>        

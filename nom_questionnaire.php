@@ -1,9 +1,8 @@
 <?php
-
+session_start();
 require ("identifiants.php");
 
-//$nom_questionnaire=$_POST['nom_questionnaire'];
-$nom_questionnaire="7 sommets les plus haut du monde";
+$nom_questionnaire=$_SESSION['nom_questionnaire'];
 $requete=$bd->prepare("SELECT nom_questionnaire FROM questionnaires WHERE nom_questionnaire = :nom_questionnaire");
 $requete->bindValue(':nom_questionnaire',$nom_questionnaire);
 $requete->execute();
